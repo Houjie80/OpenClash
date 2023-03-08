@@ -93,7 +93,8 @@ function index()
 	entry({"admin", "services", "openclash", "proxy-provider-config"},cbi("openclash/proxy-provider-config"), nil).leaf = true
 	entry({"admin", "services", "openclash", "rule-providers-config"},cbi("openclash/rule-providers-config"), nil).leaf = true
 	entry({"admin", "services", "openclash", "config"},form("openclash/config"),_("Config Manage"), 80).leaf = true
-	entry({"admin", "services", "openclash", "log"},cbi("openclash/log"),_("Server Logs"), 90).leaf = true
+	entry({"admin", "services", "openclash", "oceditor"},template("openclash/oceditor"),_("Config Editor"), 90).leaf = true
+	entry({"admin", "services", "openclash", "log"},cbi("openclash/log"),_("Server Logs"), 100).leaf = true
 
 end
 local fs = require "luci.openclash"
