@@ -35,60 +35,87 @@
 	<table width="100%">
 	    <tr>
 	  	<td colspan="4" width="100%">
-	  		<p style="margin: 10px 0; text-align: center">
+	  		<p style="margin: 0px 0; text-align: center">
 				<%
 					if uci:get("openclash", "config", "enable_meta_core") ~= '1' then
 				%>
-	      				<img id="_logo" src="/luci-static/resources/openclash/img/logo.png?<%=random%>" loading="lazy" onload="return logo_check(this,this.src,'https://ftp.jaist.ac.jp/pub/sourceforge.jp/storage/g/o/op/openclash/<%=RELEASE_BRANCH%>/img/logo.png')" onerror="return logo_error(this,'/luci-static/resources/openclash/img/logo.png?<%=random%>')" title="Hello, World!" alt="OpenClash" onclick="return homepage()" />
+	      				<img id="_logo" src="/luci-static/resources/openclash/img/openclash.png"?<%=random%>" loading="lazy" alt="OpenClash" width="250" onclick="return homepage()" />
 				<%
 					else
 				%>
-						<img id="_logo" src="/luci-static/resources/openclash/img/meta.png?<%=random%>" loading="lazy" onload="return logo_check(this,this.src,'https://ftp.jaist.ac.jp/pub/sourceforge.jp/storage/g/o/op/openclash/<%=RELEASE_BRANCH%>/img/meta.png')" onerror="return logo_error(this,'/luci-static/resources/openclash/img/meta.png?<%=random%>')" title="Hello, World!" alt="OpenClash" onclick="return homepage()" />
+						<img id="_logo" src="/luci-static/resources/openclash/img/meta.png"?<%=random%>" loading="lazy" alt="OpenClash" width="250" onclick="return homepage()" />
 				<%
 					end
 				%>
 			</p>
-	  		<p id="_clashversion" style="margin: 10px 0; text-align: center">
-				<img src="/luci-static/resources/openclash/img/version.svg?<%=random%>" onerror="return imgerrorfuns(this,'https://ftp.jaist.ac.jp/pub/sourceforge.jp/storage/g/o/op/openclash/<%=RELEASE_BRANCH%>/img/version.png')" alt="currentversion" height="21px" onclick="return go_update()">
+	  		<p id="_clashversion" style="margin: 0px 0; text-align: center">
+				<img src="/luci-static/resources/openclash/img/version.svg?<%=random%>" alt="currentversion" height="21px" onclick="return go_update()">
 	  		</p>
 	    </td></tr>
 	    <tr><td colspan="4" width="100%">
-     		<p style="margin: 10px 0; text-align: center">
-				<img id="gitbook" src="/luci-static/resources/openclash/img/Wiki.svg?<%=random%>" loading="lazy" alt="GitBook" width="50px" height="20px" onerror="return imgerrorfuns(this,'https://img.shields.io/badge/Wiki--lightgrey?logo=GitBook&style=social')" onclick="return gitbookpage()" />
+     		<p style="margin: 0px 0; text-align: center">
+				<img id="gitbook" src="/luci-static/resources/openclash/img/Wiki.svg?<%=random%>" loading="lazy" alt="GitBook" width="50px" height="20px" onclick="return gitbookpage()" />
 				&nbsp;&nbsp;&nbsp;
-				<img id="wiki" src="/luci-static/resources/openclash/img/Tutorials.svg?<%=random%>" loading="lazy" alt="Wiki" width="75px" height="20px" onerror="return imgerrorfuns(this,'https://img.shields.io/badge/Tutorials--lightgrey?logo=Wikipedia&style=social')" onclick="return wikipage()" />
+				<img id="wiki" src="/luci-static/resources/openclash/img/Tutorials.svg?<%=random%>" loading="lazy" alt="Wiki" width="75px" height="20px" onclick="return wikipage()" />
 				&nbsp;&nbsp;&nbsp;
-				<img id="star" src="/luci-static/resources/openclash/img/Star.svg?<%=random%>g" loading="lazy" alt="star" width="50px" height="20px" onerror="return imgerrorfuns(this,'https://img.shields.io/badge/Star--lightgrey?logo=github&style=social')" onclick="return homepage()" />
+				<img id="star" src="/luci-static/resources/openclash/img/Star.svg?<%=random%>g" loading="lazy" alt="star" width="50px" height="20px" onclick="return homepage()" />
 				&nbsp;&nbsp;&nbsp;
-				<img id="telegram" src="/luci-static/resources/openclash/img/Telegram.svg?<%=random%>" loading="lazy" alt="Telegram" onerror="return imgerrorfuns(this,'https://img.shields.io/badge/Telegram--lightgrey?logo=Telegram&style=social')" onclick="return telegrampage()" />
+				<img id="telegram" src="/luci-static/resources/openclash/img/Telegram.svg?<%=random%>" loading="lazy" alt="Telegram" onclick="return telegrampage()" />
 				&nbsp;&nbsp;&nbsp;
-				<img id="sponsor" src="/luci-static/resources/openclash/img/Sponsor.svg?<%=random%>" loading="lazy" alt="Sponsor" width="73px" height="20px" onerror="return imgerrorfuns(this,'https://img.shields.io/badge/Sponsor--lightgrey?logo=ko-fi&style=social')" onclick="return sponsorpage()" />
+				<img id="sponsor" src="/luci-static/resources/openclash/img/Sponsor.svg?<%=random%>" loading="lazy" alt="Sponsor" width="73px" height="20px" onclick="return sponsorpage()" />
         	</p>
         </td></tr>
 	    <tr><td width="100%" colspan="4">
-	  		<div style="margin: 10px 0; text-align: center" id="_clashstart">
+	  		<p style="margin: 10px 0; text-align: center" id="_clashstart">
 	  			<b><%:Tip: after started, please wait patiently until the connection is normal%></b>
-			</div>
-	    </td></tr>
-		<tr><td width="25%"><%:Main Program%></td><td  width="25%" align="left"><span id="_clash"><%:Collecting data...%></span><span id="_watchdog"></span></td><td width="25%"><%:Control Panel Login IP%></td><td width="25%" align="left" id="_daip"><%:Collecting data...%></td></tr>
+	  		</p>
+	        </td></tr>
+    </td></tr>
+
+		<tr><td width="20%"><%:Main Program%></td><td  width="20%" align="left"><span id="_clash"><%:Collecting data...%></span><span id="_watchdog"></span></td><td width="20%"><%:Control Panel Login IP%></td><td width="20%" align="left" id="_daip"><%:Collecting data...%></td></tr>
+
 		<tr><td width="20%"><%:Running Mode%></td><td  width="30%" align="left"><span id="_mode"><%:Collecting data...%></span><span id="radio-ru-mode" class="radio-button">
+
 				<input type="radio" id="normal" name="radios-ru" value="" checked onclick="return switch_run_mode(this.value)"/>
+
 				<label for="normal" id="run_normal"><%:Compatible%></label>
+
 				<input type="radio" id="tun" name="radios-ru" value="-tun" onclick="return switch_run_mode(this.value)"/>
+
 				<label for="tun"><%:TUN%></label>
+
 				<input type="radio" id="mix" name="radios-ru" value="-mix" onclick="return switch_run_mode(this.value)"/>
+
 				<label for="mix"><%:Mix%></label>
-				</span></td><td width="25%"><%:Control Panel Login Port%></td><td width="25%" align="left" id="_dapo"><%:Collecting data...%></td></tr>
-		<tr><td width="25%"><%:Proxy Mode%></td><td width="25%" align="left"><span id="radio-de"><%:Collecting data...%></span><span id="radio-mode" class="radio-button">
+
+				</span></td><td width="20%"><%:Control Panel Login Port%></td><td width="20%" align="left" id="_dapo"><%:Collecting data...%></td></tr>
+
+		<tr><td width="20%"><%:Proxy Mode%></td><td width="20%" align="left"><span id="radio-de"><%:Collecting data...%></span><span id="radio-mode" class="radio-button">
+
 				<input type="radio" id="rule" name="radios" value="rule" checked onclick="return switch_rule_mode(this.value)"/>
+
 				<label for="rule">Rule</label>
+
 				<input type="radio" id="global" name="radios" value="global" onclick="return switch_rule_mode(this.value)"/>
+
 				<label for="global">Global</label>
+
 				<input type="radio" id="direct" name="radios" value="direct" onclick="return switch_rule_mode(this.value)"/>
+
 				<label for="direct">Direct</label>
-				</span></td><td width="25%"><%:Control Panel Login Secret%></td><td width="25%" align="left" id="_dase"><%:Collecting data...%></td></tr>
-		<tr><td width="25%"><%:Yacd Control Panel%></td><td width="25%" align="left" id="_web"><%:Collecting data...%></td><td width="25%"><%:Dashboard Control Panel%></td><td width="25%" align="left" id="_webo"><%:Collecting data...%></td></tr>
-		<tr id="tool_label2"><td colspan="4"><div style="margin: 10px 0; text-align: center">
+
+				</span></td><td width="20%"><%:Control Panel Login Secret%></td><td width="20%" align="left" id="_dase"><%:Collecting data...%></td></tr>
+
+		<tr><td width="20%"><%:Yacd Control Panel%></td><td width="20%" align="left" id="_web"><%:Collecting data...%></td><td width="20%"><%:Dashboard Control Panel%></td><td width="20%" align="left" id="_webo"><%:Collecting data...%></td></tr>
+
+		<tr><td width="20%"><%:SERVER%></td><td width="20%" align="left" id="isp"><%:Collecting data...%></td><td width="20%"><%:IP %></td><td width="20%" align="left" id="ip"><%:Collecting data...%></td></tr>
+
+		<tr><td width="20%"><%:LOKASI%></td><td width="20%" align="left" id="address"><%:Collecting data...%></td></tr>
+
+		<tr><td width="20%"><%:TANGGAL%></td><td width="20%" align="left" id="tanggalwaktu"><%:Collecting data...%></td><td width="20%"><%:JAM%></td><td width="20%" align="left" id="time"><%:Collecting data...%></td></tr>
+
+		<tr id="tool_label2"><td colspan="4"><p style="margin: 0px 0; text-align: center">
+
 <span>
 &nbsp;&nbsp;<%:Up:%>&nbsp;
 	<span id="upload_">
@@ -152,7 +179,11 @@
 	</span>
 	&nbsp;&nbsp;
 </span>
-</div></td></tr>
+</p></td></tr>
+</table>
+</fieldset>
+<fieldset class="cbi-section">
+	<table>
 		<tr height="50px">
 			<td width="100%" colspan="4">
 				<div id="hid_btn" style="height: 25px;width: 100px;margin: 0 auto;" onclick="hid_btn_action()">
@@ -162,16 +193,18 @@
 		</tr>
 		<tr id="hid_1"><td width="100%" colspan="4"><p style="margin: 10px 0; text-align: center"><b><%:Quick Operation%></b></p></td></tr>
     <tr id="hid_2">
-    	<td width="25%" align="center"><p style="margin: 10px 0; text-align: center" id="_close_all_connection"><%:Collecting data...%></p></td>
-			<td width="25%" align="center"><p style="margin: 10px 0; text-align: center" id="_reload_firewall"><%:Collecting data...%></p></td>
-			<td width="25%" align="center"><p style="margin: 10px 0; text-align: center" id="_flush_fakeip_cache"><%:Collecting data...%></p></td>
-			<td width="25%" align="center"><p style="margin: 10px 0; text-align: center" id="_update_subscribe"><%:Collecting data...%></p></td>
+    	<td width="20%" align="center"><p style="margin: 10px 0; text-align: center" id="_close_all_connection"><%:Collecting data...%></p></td>
+			<td width="20%" align="center"><p style="margin: 10px 0; text-align: center" id="_reload_firewall"><%:Collecting data...%></p></td></tr>
+			<tr id="hid_5">
+			<td width="20%" align="center"><p style="margin: 10px 0; text-align: center" id="_flush_fakeip_cache"><%:Collecting data...%></p></td>
+			<td width="20%" align="center"><p style="margin: 10px 0; text-align: center" id="_update_subscribe"><%:Collecting data...%></p></td>
 			</tr>
 		<tr id="hid_3">
-			<td width="25%" align="center"><p style="margin: 10px 0; text-align: center" id="_update_other_rules"><%:Collecting data...%></p></td>
-			<td width="25%" align="center"><p style="margin: 10px 0; text-align: center" id="_update_geoip"><%:Collecting data...%></p></td>
-			<td width="25%" align="center"><p style="margin: 10px 0; text-align: center" id="_update_geosite"><%:Collecting data...%></p></td>
-			<td width="25%" align="center"><p style="margin: 10px 0; text-align: center" id="_one_key_update"><%:Collecting data...%></p></td>
+			<td width="20%" align="center"><p style="margin: 10px 0; text-align: center" id="_update_other_rules"><%:Collecting data...%></p></td>
+			<td width="20%" align="center"><p style="margin: 10px 0; text-align: center" id="_update_geoip"><%:Collecting data...%></p></td></tr>
+			<tr id="hid_4">
+			<td width="20%" align="center"><p style="margin: 10px 0; text-align: center" id="_update_geosite"><%:Collecting data...%></p></td>
+			<td width="20%" align="center"><p style="margin: 10px 0; text-align: center" id="_one_key_update"><%:Collecting data...%></p></td>
 			</tr>
 </table>
 </fieldset>
@@ -182,10 +215,10 @@
 				<b><%:Please ensure that all items are displayed normally before running. If you need to update, please go to the global settings page%></b>
 			</p>
 		</td></tr>
-		<tr><td width="25%"><%:Node Select Backup%></td><td width="25%" align="left" id="_historychecktime"><%:Collecting data...%></td><td width="25%"><%:lhie1 Rule Update%></td><td width="25%" align="left" id="_lhie1"><%:Collecting data...%></td></tr>
-		<tr><td width="25%"><%:ConnersHua Rule Update%></td><td width="25%" align="left" id="_ConnersHua"><%:Collecting data...%></td><td width="25%"><%:ConnersHua Return Rule Update%></td><td width="25%" align="left" id="_ConnersHua_return"><%:Collecting data...%></td></tr>
-		<tr><td width="25%"><%:Mainland IP Update%></td><td width="25%" align="left" id="_chnroute"><%:Collecting data...%></td><td width="25%"><%: Mainland IPv6 Update%></td><td width="25%" align="left" id="_chnroutev6"><%:Collecting data...%></td></tr>
-		<tr><td width="25%"><%:GEOIP Data Update%></td><td width="25%" align="left" id="_ipdb"><%:Collecting data...%></td><td width="25%"><%:GeoSite Data Update%></td><td width="25%" align="left" id="_geosite"><%:Collecting data...%></td></tr>
+		<tr><td width="20%"><%:Node Select Backup%></td><td width="20%" align="left" id="_historychecktime"><%:Collecting data...%></td><td width="20%"><%:lhie1 Rule Update%></td><td width="20%" align="left" id="_lhie1"><%:Collecting data...%></td></tr>
+		<tr><td width="20%"><%:ConnersHua Rule Update%></td><td width="20%" align="left" id="_ConnersHua"><%:Collecting data...%></td><td width="20%"><%:ConnersHua Return Rule Update%></td><td width="20%" align="left" id="_ConnersHua_return"><%:Collecting data...%></td></tr>
+		<tr><td width="20%"><%:Mainland IP Update%></td><td width="20%" align="left" id="_chnroute"><%:Collecting data...%></td><td width="20%"><%: Mainland IPv6 Update%></td><td width="20%" align="left" id="_chnroutev6"><%:Collecting data...%></td></tr>
+		<tr><td width="20%"><%:GEOIP Data Update%></td><td width="20%" align="left" id="_ipdb"><%:Collecting data...%></td><td width="20%"><%:GeoSite Data Update%></td><td width="20%" align="left" id="_geosite"><%:Collecting data...%></td></tr>
 	</table>
 </fieldset>
 <script type="text/javascript">//<![CDATA[
@@ -218,6 +251,8 @@
 	var hid_1 = document.getElementById("hid_1");
 	var hid_2 = document.getElementById("hid_2");
 	var hid_3 = document.getElementById("hid_3");
+	var hid_4 = document.getElementById("hid_4");
+	var hid_5 = document.getElementById("hid_5");
 	var state = document.getElementById("state");
 	var hid_btn = document.getElementById("hid_btn");
 	var tool_label2 = document.getElementById('tool_label2');
@@ -243,6 +278,8 @@
 	hid_1.style.display = "none";
 	hid_2.style.display = "none";
 	hid_3.style.display = "none";
+	hid_4.style.display = "none";
+	hid_5.style.display = "none";
 	state.style.display="none";
 
 	XHR.poll(3, '<%=luci.dispatcher.build_url("admin", "services", "openclash", "status")%>', null, function(x, status) {
@@ -544,6 +581,8 @@
 			hid_1.style.display = "";
 			hid_2.style.display = "";
 			hid_3.style.display = "";
+			hid_4.style.display = "";
+			hid_5.style.display = "";
 			state.style.display = "block";
 			hid_btn_if = false;
 			clearInterval(state_refresh);
@@ -552,6 +591,8 @@
 			hid_1.style.display = "none";
 			hid_2.style.display = "none";
 			hid_3.style.display = "none";
+			hid_4.style.display = "none";
+			hid_5.style.display = "none";
 			state.style.display = "none";
 			hid_btn_if = true;
 			clearInterval(state_refresh);
@@ -924,5 +965,100 @@
        url4='https://github.com/vernesong/OpenClash/releases';
        winOpen(url4);
     };
-//]]></script>
+//]]><script>
 
+$.get("http://ip-api.com/json", function (response) {
+
+    $("#ip").html("IP: " + response.query);
+
+    $("#address").html("Location: " + response.country + ", " + response.city);
+
+    $("#isp").html("ISP: " + response.isp);
+
+}, "jsonp");
+
+function showTime(){
+
+			var a_p = "";
+
+			var today = new Date();
+
+			var curr_hour = today.getHours();
+
+			var curr_minute = today.getMinutes();
+
+			var curr_second = today.getSeconds();
+
+			if (curr_hour<12) {
+
+				a_p = "WIB";
+
+			}else {
+
+				a_p = "WIB";
+
+			}
+
+			if (curr_hour == 0) {
+
+				curr_hour=24;
+
+			}
+
+			if (curr_hour == 24) {
+
+				curr_hour=curr_hour-24;
+
+			}
+
+			curr_hour = checkTime(curr_hour);
+
+			curr_minute = checkTime(curr_minute);
+
+			curr_second = checkTime(curr_second);
+
+			document.getElementById('time').innerHTML= curr_hour+":"+curr_minute+":"+curr_second+" "+a_p;
+
+			
+
+		}
+
+		function checkTime(i){
+
+			if (i<10) {
+
+				i = "0"+i;
+
+			}
+
+			return i;
+
+		}
+
+		setInterval(showTime,100);
+
+		
+
+		var tw = new Date();
+
+if (tw.getTimezoneOffset() == 0) (a=tw.getTime() + ( 7 *60*60*1000))
+
+else (a=tw.getTime());
+
+tw.setTime(a);
+
+var tahun= tw.getFullYear ();
+
+var hari= tw.getDay ();
+
+var bulan= tw.getMonth ();
+
+var tanggal= tw.getDate ();
+
+var hariarray=new Array("Minggu,","Senin,","Selasa,","Rabu,","Kamis,","Jum'at,","Sabtu,");
+
+var bulanarray=new Array("Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","Nopember","Desember");
+
+document.getElementById("tanggalwaktu").innerHTML = hariarray[hari]+" "+tanggal+" "+bulanarray[bulan]+" "+tahun;
+
+</script></script>
