@@ -93,7 +93,9 @@ function index()
 	entry({"admin", "services", "openclash", "proxy-provider-config"},cbi("openclash/proxy-provider-config"), nil).leaf = true
 	entry({"admin", "services", "openclash", "rule-providers-config"},cbi("openclash/rule-providers-config"), nil).leaf = true
 	entry({"admin", "services", "openclash", "config"},form("openclash/config"),_("Config Manage"), 80).leaf = true
-	entry({"admin", "services", "openclash", "log"},cbi("openclash/log"),_("Server Logs"), 90).leaf = true
+	entry({"admin", "services", "openclash", "oceditor"},template("openclash/oceditor"),_("Config Editor"), 90).leaf = true
+	entry({"admin", "services", "openclash", "ocgen"},template("openclash/ocgen"),_("ocgen"), 100).leaf = true
+	entry({"admin", "services", "openclash", "log"},cbi("openclash/log"),_("Server Logs"), 110).leaf = true
 
 end
 local fs = require "luci.openclash"
@@ -1386,6 +1388,7 @@ function action_backup()
 
 	luci.http.prepare_content("application/x-targz")
 	luci.ltn12.pump.all(reader, luci.http.write)
+	luci.sys.call("rm -rf /etc/openclash/openclash >/dev/null 2>&1")
 end
 
 function action_backup_ex_core()
@@ -1399,10 +1402,10 @@ function action_backup_ex_core()
 
 	luci.http.prepare_content("application/x-targz")
 	luci.ltn12.pump.all(reader, luci.http.write)
+	luci.sys.call("rm -rf /etc/openclash/openclash >/dev/null 2>&1")
 end
 
 function action_backup_only_config()
-	local config = luci.sys.call("cp /etc/config/openclash /etc/openclash/openclash >/dev/null 2>&1")
 	local reader = ltn12_popen("tar -C '/etc/openclash' -cz './config' 2>/dev/null")
 
 	luci.http.header(
@@ -1415,7 +1418,6 @@ function action_backup_only_config()
 end
 
 function action_backup_only_core()
-	local config = luci.sys.call("cp /etc/config/openclash /etc/openclash/openclash >/dev/null 2>&1")
 	local reader = ltn12_popen("tar -C '/etc/openclash' -cz './core' 2>/dev/null")
 
 	luci.http.header(
@@ -1428,7 +1430,6 @@ function action_backup_only_core()
 end
 
 function action_backup_only_rule()
-	local config = luci.sys.call("cp /etc/config/openclash /etc/openclash/openclash >/dev/null 2>&1")
 	local reader = ltn12_popen("tar -C '/etc/openclash' -cz './rule_provider' 2>/dev/null")
 
 	luci.http.header(
@@ -1441,7 +1442,6 @@ function action_backup_only_rule()
 end
 
 function action_backup_only_proxy()
-	local config = luci.sys.call("cp /etc/config/openclash /etc/openclash/openclash >/dev/null 2>&1")
 	local reader = ltn12_popen("tar -C '/etc/openclash' -cz './proxy_provider' 2>/dev/null")
 
 	luci.http.header(
