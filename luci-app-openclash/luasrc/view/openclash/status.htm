@@ -4,8 +4,8 @@
 .radio-button{
 	display: none;
 	white-space: nowrap;
-	background-color: #d1d1d1;
-	border-radius: 4px;
+	background-color: #555464;
+	border-radius: 2px;
 }
 
 .radio-button input[type="radio"] {
@@ -14,15 +14,67 @@
    
 .radio-button label {
 	display: inline-block;
-	font-size: 14px;
-	padding: 4px 5px;
-	color: white;
+	font-size: 11px;
+	padding: 2px 3px;
+	color: cyan;
 	cursor: pointer;
-	border-radius: 4px;
+	border-radius: 2px;
 }
 
 .radio-button input[type="radio"]:checked+label {
 	background-color: #1080c1;
+}
+.blink_me {
+  animation: blinker 2s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+.status {
+clear:both;
+#padding:5px 5px 5px 5px;
+#margin-bottom:4px;
+#font-size: 19px;
+border: 3px solid #5DD6F3;
+border-radius: 9px;
+background-color: black;
+}
+.status span{
+font-weight: bold;
+color:cyan;
+font-size: 8px;
+margin-bottom: 5px;
+}
+table {
+color: cyan;
+#background-color: black;
+border: 2px solid #5DD6F3;
+border-radius: 10px;
+}
+.lok{
+color:cyan;
+}
+ td{
+color:cyan;
+border: 2px solid #5DD6F3;
+#background-color: black;
+}
+tr{
+color:cyan;
+border: 2px solid #5DD6F3;
+#background-color: black;
+}
+.fstatus {
+clear:both;
+padding:5px 5px 5px 5px;
+#margin-bottom:4px;
+#font-size: 12px;
+border: 3px solid #5DD6F3;
+border-radius: 5px;
+background-color: black;
 }
 </style>
 </head>
@@ -31,68 +83,99 @@
 	local RELEASE_BRANCH = uci:get("openclash", "config", "release_branch")
 	local random = tostring(os.time()):reverse():sub(1, 9)
 %>
-<fieldset class="cbi-section">
-	<table width="100%">
+<fieldset class="status">
+							<legend class="fstatus" style="font-size:18px" align="center"><marquee scrollamount="3"><font color="cyan"><i>OPENCLASH REMOD BY HOUJIE<i></font></marquee></legend>
+	<table border width="100%" style="color: cyan;">
 	    <tr>
 	  	<td colspan="4" width="100%">
-	  		<p style="margin: 10px 0; text-align: center">
+	  		<marquee scrollamount="5"><p style="margin: 0px 0; text-align: center">
 				<%
 					if uci:get("openclash", "config", "enable_meta_core") ~= '1' then
 				%>
-	      				<img id="_logo" src="/luci-static/resources/openclash/img/logo.png?<%=random%>" loading="lazy" onload="return logo_check(this,this.src,'https://ftp.jaist.ac.jp/pub/sourceforge.jp/storage/g/o/op/openclash/<%=RELEASE_BRANCH%>/img/logo.png')" onerror="return logo_error(this,'/luci-static/resources/openclash/img/logo.png?<%=random%>')" title="Hello, World!" alt="OpenClash" onclick="return homepage()" />
+	      				<img id="_logo" src="/luci-static/resources/openclash/img/openclash.png"?<%=random%>" loading="lazy" alt="OpenClash" width="300" onclick="return homepage()" />
 				<%
 					else
 				%>
-						<img id="_logo" src="/luci-static/resources/openclash/img/meta.png?<%=random%>" loading="lazy" onload="return logo_check(this,this.src,'https://ftp.jaist.ac.jp/pub/sourceforge.jp/storage/g/o/op/openclash/<%=RELEASE_BRANCH%>/img/meta.png')" onerror="return logo_error(this,'/luci-static/resources/openclash/img/meta.png?<%=random%>')" title="Hello, World!" alt="OpenClash" onclick="return homepage()" />
+						<img id="_logo" src="/luci-static/resources/openclash/img/metax.png"?<%=random%>" loading="lazy" alt="OpenClash" width="300" onclick="return homepage()" />
 				<%
 					end
 				%>
-			</p>
-	  		<p id="_clashversion" style="margin: 10px 0; text-align: center">
-				<img src="/luci-static/resources/openclash/img/version.svg?<%=random%>" onerror="return imgerrorfuns(this,'https://ftp.jaist.ac.jp/pub/sourceforge.jp/storage/g/o/op/openclash/<%=RELEASE_BRANCH%>/img/version.png')" alt="currentversion" height="21px" onclick="return go_update()">
+			</p></marquee>
+			<div class="blink_me">
+	  		<p id="_clashversion" style="margin: 0px 0; text-align: center">
+				<img src="/luci-static/resources/openclash/img/version.svg?<%=random%>" alt="currentversion" height="21px" onclick="return go_update()">
 	  		</p>
+	  		</div>
 	    </td></tr>
 	    <tr><td colspan="4" width="100%">
-     		<p style="margin: 10px 0; text-align: center">
-				<img id="gitbook" src="/luci-static/resources/openclash/img/Wiki.svg?<%=random%>" loading="lazy" alt="GitBook" width="50px" height="20px" onerror="return imgerrorfuns(this,'https://img.shields.io/badge/Wiki--lightgrey?logo=GitBook&style=social')" onclick="return gitbookpage()" />
+     		<p style="margin: 0px 0; text-align: center">
+				<img id="gitbook" src="/luci-static/resources/openclash/img/Wiki.png?<%=random%>" loading="lazy" alt="GitBook" width="40px" height="20px" onclick="return gitbookpage()" />
 				&nbsp;&nbsp;&nbsp;
-				<img id="wiki" src="/luci-static/resources/openclash/img/Tutorials.svg?<%=random%>" loading="lazy" alt="Wiki" width="75px" height="20px" onerror="return imgerrorfuns(this,'https://img.shields.io/badge/Tutorials--lightgrey?logo=Wikipedia&style=social')" onclick="return wikipage()" />
+				<img id="wiki" src="/luci-static/resources/openclash/img/Tutorials.png?<%=random%>" loading="lazy" alt="Wiki" width="30px" height="20px" onclick="return wikipage()" />
 				&nbsp;&nbsp;&nbsp;
-				<img id="star" src="/luci-static/resources/openclash/img/Star.svg?<%=random%>g" loading="lazy" alt="star" width="50px" height="20px" onerror="return imgerrorfuns(this,'https://img.shields.io/badge/Star--lightgrey?logo=github&style=social')" onclick="return homepage()" />
+				<img id="star" src="/luci-static/resources/openclash/img/Star.png?<%=random%>g" loading="lazy" alt="star" width="30px" height="20px" onclick="return homepage()" />
 				&nbsp;&nbsp;&nbsp;
-				<img id="telegram" src="/luci-static/resources/openclash/img/Telegram.svg?<%=random%>" loading="lazy" alt="Telegram" onerror="return imgerrorfuns(this,'https://img.shields.io/badge/Telegram--lightgrey?logo=Telegram&style=social')" onclick="return telegrampage()" />
+				<img id="telegram" src="/luci-static/resources/openclash/img/Telegram.png?<%=random%>" loading="lazy" alt="Telegram"  width="50px" height="20px" onclick="return telegrampage()" />
 				&nbsp;&nbsp;&nbsp;
-				<img id="sponsor" src="/luci-static/resources/openclash/img/Sponsor.svg?<%=random%>" loading="lazy" alt="Sponsor" width="73px" height="20px" onerror="return imgerrorfuns(this,'https://img.shields.io/badge/Sponsor--lightgrey?logo=ko-fi&style=social')" onclick="return sponsorpage()" />
+				<img id="Tu" src="/luci-static/resources/openclash/img/Tu.png?<%=random%>" loading="lazy" alt="Tu" width="40px" height="20px" onclick="return Tupage()" />
+				&nbsp;&nbsp;&nbsp;
+				<img id="sponsor" src="/luci-static/resources/openclash/img/Sponsor.png?<%=random%>" loading="lazy" alt="Sponsor" width="50px" height="20px" onclick="return sponsorpage()" />
         	</p>
         </td></tr>
 	    <tr><td width="100%" colspan="4">
-	  		<div style="margin: 10px 0; text-align: center" id="_clashstart">
+	  		<p style="margin: 10px 0; text-align: center" id="_clashstart">
 	  			<b><%:Tip: after started, please wait patiently until the connection is normal%></b>
-			</div>
-	    </td></tr>
-		<tr><td width="25%"><%:Main Program%></td><td  width="25%" align="left"><span id="_clash"><%:Collecting data...%></span><span id="_watchdog"></span></td><td width="25%"><%:Control Panel Login IP%></td><td width="25%" align="left" id="_daip"><%:Collecting data...%></td></tr>
-		<tr><td width="20%"><%:Running Mode%></td><td  width="30%" align="left"><span id="_mode"><%:Collecting data...%></span><span id="radio-ru-mode" class="radio-button">
+	  		</p>
+	        </td></tr>
+    </td></tr>
+
+		<tr><td class="lok"  width="20%"><%:Main Program%></td><td class="lok"   width="20%" align="left"><span id="_clash"><%:Collecting data...%></span><span id="_watchdog"></span></td><td class="lok"  width="20%"><%:Control Panel Login IP%></td><td class="lok"  width="20%" align="left" id="_daip"><%:Collecting data...%></td></tr>
+
+		<tr><td class="lok"  width="20%"><%:Running Mode%></td><td class="lok"   width="30%" align="left"><span id="_mode"><%:Collecting data...%></span><span id="radio-ru-mode" class="radio-button">
+
 				<input type="radio" id="normal" name="radios-ru" value="" checked onclick="return switch_run_mode(this.value)"/>
+
 				<label for="normal" id="run_normal"><%:Compatible%></label>
+
 				<input type="radio" id="tun" name="radios-ru" value="-tun" onclick="return switch_run_mode(this.value)"/>
+
 				<label for="tun"><%:TUN%></label>
+
 				<input type="radio" id="mix" name="radios-ru" value="-mix" onclick="return switch_run_mode(this.value)"/>
+
 				<label for="mix"><%:Mix%></label>
-				</span></td><td width="25%"><%:Control Panel Login Port%></td><td width="25%" align="left" id="_dapo"><%:Collecting data...%></td></tr>
-		<tr><td width="25%"><%:Proxy Mode%></td><td width="25%" align="left"><span id="radio-de"><%:Collecting data...%></span><span id="radio-mode" class="radio-button">
+
+				</span></td><td class="lok"  width="20%"><%:Control Panel Login Port%></td><td class="lok"  width="20%" align="left" id="_dapo"><%:Collecting data...%></td></tr>
+
+		<tr><td class="lok"  width="20%"><%:Proxy Mode%></td><td class="lok"  width="20%" align="left"><span id="radio-de"><%:Collecting data...%></span><span id="radio-mode" class="radio-button">
+
 				<input type="radio" id="rule" name="radios" value="rule" checked onclick="return switch_rule_mode(this.value)"/>
+
 				<label for="rule">Rule</label>
+
 				<input type="radio" id="global" name="radios" value="global" onclick="return switch_rule_mode(this.value)"/>
+
 				<label for="global">Global</label>
+
 				<input type="radio" id="direct" name="radios" value="direct" onclick="return switch_rule_mode(this.value)"/>
+
 				<label for="direct">Direct</label>
-				</span></td><td width="25%"><%:Control Panel Login Secret%></td><td width="25%" align="left" id="_dase"><%:Collecting data...%></td></tr>
-		<tr><td width="25%"><%:Yacd Control Panel%></td><td width="25%" align="left" id="_web"><%:Collecting data...%></td><td width="25%"><%:Dashboard Control Panel%></td><td width="25%" align="left" id="_webo"><%:Collecting data...%></td></tr>
-		<tr id="tool_label2"><td colspan="4"><div style="margin: 10px 0; text-align: center">
-<span>
+
+				</span></td><td class="lok"  width="20%"><%:Control Panel Login Secret%></td><td class="lok"  width="20%" align="left" id="_dase"><%:Collecting data...%></td></tr>
+
+		<tr style=color:cyan><td class="lok"  width="20%"><%:Yacd Control Panel%></td><td class="lok"  width="20%" align="left" id="_web"><%:Collecting data...%></td><td class="lok"  width="20%"><%:Dashboard Control Panel%></td><td class="lok"  width="20%" align="left" id="_webo"><%:Collecting data...%></td></tr>
+
+		<tr><td class="lok" width="20%"><%:SERVER%></td><td class="lok" width="20%" align="left" id="isp"><%:Collecting data...%></td><td class="lok"  width="20%"><%:IP SERVER%></td><td class="lok"  width="20%" align="left" id="ip"><%:Collecting data...%></td></tr>
+
+		<tr><td class="lok" width="20%"><%:LOKASI%></td><td class="lok" width="20%" align="left" id="address"><%:Collecting data...%></td></tr>
+
+		<tr><td class="lok" width="20%"><%:TANGGAL%></td><td class="lok" width="20%" align="left" id="tanggalwaktu"><%:Collecting data...%></td><td class="lok"  width="20%"><%:JAM%></td><td class="lok"  width="20%" align="left" id="time"><%:Collecting data...%></td></tr>
+
+		<tr id="tool_label2"><td colspan="4"><p style="margin: 0px 0; text-align: center">
+			<span>
 &nbsp;&nbsp;<%:Up:%>&nbsp;
 	<span id="upload_">
-		<font style=color:green>
+		<font style=color:cyan>
 		0 KB/S
 		</font>
 	</span>
@@ -101,7 +184,7 @@
 <span>
 &nbsp;&nbsp;<%:Down:%>&nbsp;
 	<span id="download_">
-		<font style=color:green>
+		<font style=color:cyan>
 		0 KB/S
 		</font>
 	</span>
@@ -110,7 +193,7 @@
 <span>
 &nbsp;&nbsp;<%:Up Total:%>&nbsp;
 	<span id="uploadtotal_">
-		<font style=color:green>
+		<font style=color:cyan>
 		0 KB
 		</font>
 	</span>
@@ -119,7 +202,7 @@
 <span>
 &nbsp;&nbsp;<%:Down Total:%>&nbsp;
 	<span id="downloadtotal_">
-		<font style=color:green>
+		<font style=color:cyan>
 		0 KB
 		</font>
 	</span>
@@ -128,7 +211,7 @@
 <span>
 &nbsp;&nbsp;<%:Connections:%>&nbsp;
 	<span id="connect_t">
-		<font style=color:green>
+		<font style=color:cyan>
 		0
 		</font>
 	</span>
@@ -137,7 +220,7 @@
 <span>
 &nbsp;&nbsp;<%:Ram:%>&nbsp;
 	<span id="mem_t">
-		<font style=color:green>
+		<font style=color:cyan>
 		0 KB
 		</font>
 	</span>
@@ -146,14 +229,16 @@
 <span>
 &nbsp;&nbsp;<%:CPU:%>&nbsp;
 	<span id="cpu_t">
-		<font style=color:green>
+		<font style=color:cyan>
 		0 %
 		</font>
 	</span>
 	&nbsp;&nbsp;
 </span>
-</div></td></tr>
-		<tr height="50px">
+</p></td></tr>
+</table>
+	<table border>
+	<tr height="50px">
 			<td width="100%" colspan="4">
 				<div id="hid_btn" style="height: 25px;width: 100px;margin: 0 auto;" onclick="hid_btn_action()">
 					<div style="margin: 0 auto; top: 50%;" class="dot-typing"></div>
@@ -162,31 +247,33 @@
 		</tr>
 		<tr id="hid_1"><td width="100%" colspan="4"><p style="margin: 10px 0; text-align: center"><b><%:Quick Operation%></b></p></td></tr>
     <tr id="hid_2">
-    	<td width="25%" align="center"><p style="margin: 10px 0; text-align: center" id="_close_all_connection"><%:Collecting data...%></p></td>
-			<td width="25%" align="center"><p style="margin: 10px 0; text-align: center" id="_reload_firewall"><%:Collecting data...%></p></td>
-			<td width="25%" align="center"><p style="margin: 10px 0; text-align: center" id="_flush_fakeip_cache"><%:Collecting data...%></p></td>
-			<td width="25%" align="center"><p style="margin: 10px 0; text-align: center" id="_update_subscribe"><%:Collecting data...%></p></td>
+    	<td width="20%" align="center"><p style="margin: 10px 0; text-align: center" id="_close_all_connection"><%:Collecting data...%></p></td>
+			<td width="20%" align="center"><p style="margin: 10px 0; text-align: center" id="_reload_firewall"><%:Collecting data...%></p></td></tr>
+			<tr id="hid_5">
+			<td width="20%" align="center"><p style="margin: 10px 0; text-align: center" id="_flush_fakeip_cache"><%:Collecting data...%></p></td>
+			<td width="20%" align="center"><p style="margin: 10px 0; text-align: center" id="_update_subscribe"><%:Collecting data...%></p></td>
 			</tr>
 		<tr id="hid_3">
-			<td width="25%" align="center"><p style="margin: 10px 0; text-align: center" id="_update_other_rules"><%:Collecting data...%></p></td>
-			<td width="25%" align="center"><p style="margin: 10px 0; text-align: center" id="_update_geoip"><%:Collecting data...%></p></td>
-			<td width="25%" align="center"><p style="margin: 10px 0; text-align: center" id="_update_geosite"><%:Collecting data...%></p></td>
-			<td width="25%" align="center"><p style="margin: 10px 0; text-align: center" id="_one_key_update"><%:Collecting data...%></p></td>
+			<td width="20%" align="center"><p style="margin: 10px 0; text-align: center" id="_update_other_rules"><%:Collecting data...%></p></td>
+			<td width="20%" align="center"><p style="margin: 10px 0; text-align: center" id="_update_geoip"><%:Collecting data...%></p></td></tr>
+			<tr id="hid_4">
+			<td width="20%" align="center"><p style="margin: 10px 0; text-align: center" id="_update_geosite"><%:Collecting data...%></p></td>
+			<td width="20%" align="center"><p style="margin: 10px 0; text-align: center" id="_one_key_update"><%:Collecting data...%></p></td>
 			</tr>
-</table>
-</fieldset>
+			</table>
 <fieldset id="state" class="cbi-section">
-	<table>
+	<table border border>
 		<tr><td width="100%" colspan="4">
 			<p style="margin: 10px 0; text-align: center">
 				<b><%:Please ensure that all items are displayed normally before running. If you need to update, please go to the global settings page%></b>
 			</p>
 		</td></tr>
-		<tr><td width="25%"><%:Node Select Backup%></td><td width="25%" align="left" id="_historychecktime"><%:Collecting data...%></td><td width="25%"><%:lhie1 Rule Update%></td><td width="25%" align="left" id="_lhie1"><%:Collecting data...%></td></tr>
-		<tr><td width="25%"><%:ConnersHua Rule Update%></td><td width="25%" align="left" id="_ConnersHua"><%:Collecting data...%></td><td width="25%"><%:ConnersHua Return Rule Update%></td><td width="25%" align="left" id="_ConnersHua_return"><%:Collecting data...%></td></tr>
-		<tr><td width="25%"><%:Mainland IP Update%></td><td width="25%" align="left" id="_chnroute"><%:Collecting data...%></td><td width="25%"><%: Mainland IPv6 Update%></td><td width="25%" align="left" id="_chnroutev6"><%:Collecting data...%></td></tr>
-		<tr><td width="25%"><%:GEOIP Data Update%></td><td width="25%" align="left" id="_ipdb"><%:Collecting data...%></td><td width="25%"><%:GeoSite Data Update%></td><td width="25%" align="left" id="_geosite"><%:Collecting data...%></td></tr>
+		<tr><td width="20%"><%:Node Select Backup%></td><td width="20%" align="left" id="_historychecktime"><%:Collecting data...%></td><td width="20%"><%:lhie1 Rule Update%></td><td width="20%" align="left" id="_lhie1"><%:Collecting data...%></td></tr>
+		<tr><td width="20%"><%:ConnersHua Rule Update%></td><td width="20%" align="left" id="_ConnersHua"><%:Collecting data...%></td><td width="20%"><%:ConnersHua Return Rule Update%></td><td width="20%" align="left" id="_ConnersHua_return"><%:Collecting data...%></td></tr>
+		<tr><td width="20%"><%:Mainland IP Update%></td><td width="20%" align="left" id="_chnroute"><%:Collecting data...%></td><td width="20%"><%: Mainland IPv6 Update%></td><td width="20%" align="left" id="_chnroutev6"><%:Collecting data...%></td></tr>
+		<tr><td width="20%"><%:GEOIP Data Update%></td><td width="20%" align="left" id="_ipdb"><%:Collecting data...%></td><td width="20%"><%:GeoSite Data Update%></td><td width="20%" align="left" id="_geosite"><%:Collecting data...%></td></tr>
 	</table>
+</fieldset>
 </fieldset>
 <script type="text/javascript">//<![CDATA[
 	var clash = document.getElementById('_clash');
@@ -218,6 +305,8 @@
 	var hid_1 = document.getElementById("hid_1");
 	var hid_2 = document.getElementById("hid_2");
 	var hid_3 = document.getElementById("hid_3");
+	var hid_4 = document.getElementById("hid_4");
+	var hid_5 = document.getElementById("hid_5");
 	var state = document.getElementById("state");
 	var hid_btn = document.getElementById("hid_btn");
 	var tool_label2 = document.getElementById('tool_label2');
@@ -243,20 +332,22 @@
 	hid_1.style.display = "none";
 	hid_2.style.display = "none";
 	hid_3.style.display = "none";
+	hid_4.style.display = "none";
+	hid_5.style.display = "none";
 	state.style.display="none";
 
 	XHR.poll(3, '<%=luci.dispatcher.build_url("admin", "services", "openclash", "status")%>', null, function(x, status) {
 		if ( x && x.status == 200 ) {
 			if ( status.restricted_mode != "1" )
 			{
-			   clash.innerHTML = status.clash ? '<b style=color:green><%:Running%></b>' : '<b style=color:red><%:Not Running%></b>';
+			   clash.innerHTML = status.clash ? '<b style=color:cyan><%:Running%></b>' : '<b style=color:red><%:Not Running%></b>';
 			}
 			else
 			{
-			   clash.innerHTML = status.clash ? '<b style=color:green><%:Running%> <%:<Limited State>%></b>' : '<b style=color:red><%:Not Running%></b>';
+			   clash.innerHTML = status.clash ? '<b style=color:cyan><%:Running%> <%:<Limited State>%></b>' : '<b style=color:red><%:Not Running%></b>';
 			}
-			watchdog.innerHTML = status.watchdog ? '&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<%:Daemons%>:&nbsp;&nbsp;&nbsp;<b style=color:green><%:Running%></b>' : '&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<%:Daemons%>:&nbsp;&nbsp;&nbsp;<b style=color:red><%:Not Running%></b>';
-			dase.innerHTML = status.dase ? "<b style=color:green>"+status.dase+"</b>" : "<b style=color:red>"+"<%:Not Set%>"+"</b>";
+			watchdog.innerHTML = status.watchdog ? '&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<%:Daemons%>:&nbsp;&nbsp;&nbsp;<b style=color:cyan><%:Running%></b>' : '&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<%:Daemons%>:&nbsp;&nbsp;&nbsp;<b style=color:red><%:Not Running%></b>';
+			dase.innerHTML = status.dase ? "<b style=color:cyan>"+status.dase+"</b>" : "<b style=color:red>"+"<%:Not Set%>"+"</b>";
 			web.innerHTML = status.web ? '<input type="button" class="btn cbi-button cbi-button-reload" value="<%:Open Panel%>" onclick="return ycad_dashboard(this)"/>' : '<b style=color:red><%:Not Running%></b>';
 			webo.innerHTML = status.web ? '<input type="button" class="btn cbi-button cbi-button-reload" value="<%:Open Panel%>" onclick="return net_dashboard(this)"/>' : '<b style=color:red><%:Not Running%></b>';
 			close_all_connection.innerHTML = status.clash ? '<input type="button" class="btn cbi-button cbi-button-reload" value="<%:Close All Connections%>" onclick="return b_close_all_connection(this)"/>' : '<b style=color:red><%:Not Running%></b>';
@@ -268,19 +359,19 @@
 			update_geoip.innerHTML = '<input type="button" class="btn cbi-button cbi-button-reload" value="<%:Check GEOIP Data Update%>" onclick="return b_update_geoip(this)"/>';
 			update_geosite.innerHTML = '<input type="button" class="btn cbi-button cbi-button-reload" value="<%:Check GeoSite Data Update%>" onclick="return b_update_geosite(this)"/>';
 			if (status.daip && window.location.hostname == status.daip) {
-			   daip.innerHTML = status.daip ? "<b style=color:green>"+status.daip+"</b>" : "<b style=color:red>"+"<%:Not Set%>"+"</b>";
-			   dapo.innerHTML = status.cn_port ? "<b style=color:green>"+status.cn_port+"</b>" : "<b style=color:red>"+"<%:Not Set%>"+"</b>";
+			   daip.innerHTML = status.daip ? "<b style=color:cyan>"+status.daip+"</b>" : "<b style=color:red>"+"<%:Not Set%>"+"</b>";
+			   dapo.innerHTML = status.cn_port ? "<b style=color:cyan>"+status.cn_port+"</b>" : "<b style=color:red>"+"<%:Not Set%>"+"</b>";
 			   luci_protocol = (window.location.protocol == "http:" ? "ws://" : "wss://") + status.daip + ":" + status.cn_port;
 			}
 			else if (status.daip && window.location.hostname != status.daip && status.db_foward_domain && status.db_foward_port)
 			{
-			   daip.innerHTML = status.db_foward_domain ? "<b style=color:green>"+status.db_foward_domain+"</b>" : "<b style=color:red>"+"<%:Not Set%>"+"</b>";
-			   dapo.innerHTML = status.db_foward_port ? "<b style=color:green>"+status.db_foward_port+"</b>" : "<b style=color:red>"+"<%:Not Set%>"+"</b>";
+			   daip.innerHTML = status.db_foward_domain ? "<b style=color:cyan>"+status.db_foward_domain+"</b>" : "<b style=color:red>"+"<%:Not Set%>"+"</b>";
+			   dapo.innerHTML = status.db_foward_port ? "<b style=color:cyan>"+status.db_foward_port+"</b>" : "<b style=color:red>"+"<%:Not Set%>"+"</b>";
 			   luci_protocol = (window.location.protocol == "http:" ? "ws://" : "wss://") + status.db_foward_domain + ":" + status.db_foward_port;
 			}
 			else {
-			   daip.innerHTML = status.daip ? "<b style=color:green>"+status.daip+"</b>" : "<b style=color:red>"+"<%:Not Set%>"+"</b>";
-			   dapo.innerHTML = status.cn_port ? "<b style=color:green>"+status.cn_port+"</b>" : "<b style=color:red>"+"<%:Not Set%>"+"</b>";
+			   daip.innerHTML = status.daip ? "<b style=color:cyan>"+status.daip+"</b>" : "<b style=color:red>"+"<%:Not Set%>"+"</b>";
+			   dapo.innerHTML = status.cn_port ? "<b style=color:cyan>"+status.cn_port+"</b>" : "<b style=color:red>"+"<%:Not Set%>"+"</b>";
 			   luci_protocol = (window.location.protocol == "http:" ? "ws://" : "wss://") + status.daip + ":" + status.cn_port;
 			};
 			
@@ -352,7 +443,7 @@
 			};
 		}
 		else if ( status.startlog != "\n" && status.startlog != "" ) {
-	    	startlog.innerHTML = '<b style=color:green>'+status.startlog+'</b>';
+	    	startlog.innerHTML = '<b style=color:cyan>'+status.startlog+'</b>';
 		};
 	  };
 	});
@@ -363,35 +454,35 @@
 				var rdmdl=Math.floor(Math.random()*16)+1;
 				if(rdmdl==1)
 				{
-					startlog.innerHTML = '<b><font><%:Tip: You can modify the profile on the profile page (for content that is not taken over)%></font></b>';
+					startlog.innerHTML = '<b><font><%:Tip: Anda dapat memodifikasi profil di halaman profil (untuk konten yang tidak diambil alih)%></font></b>';
 				}
 				if(rdmdl==2)
 				{
-					startlog.innerHTML = '<b><font><%:Tip: click the version icon above to jump to the client publishing page%></font></b>';
+					startlog.innerHTML = '<b><font><%:Tip: klik ikon versi di atas untuk melompat ke halaman penerbitan klien%></font></b>';
 				}
 				if(rdmdl==3)
 				{
-					startlog.innerHTML = '<b><font><%:Tip: do not write configuration files? Try to create one click on the server page%></font></b>';
+					startlog.innerHTML = '<b><font><%:Tip: jangan menulis file konfigurasi? Cobalah untuk membuat satu klik di halaman server%></font></b>';
 				}
 				if(rdmdl==4)
 				{
-					startlog.innerHTML = '<b><font><%:Tip: some website are abnormal? Try switching modes or using third-party rules%></font></b>';
+					startlog.innerHTML = '<b><font><%:Tip: beberapa situs web tidak normal? Coba beralih mode atau gunakan aturan pihak ketiga%></font></b>';
 				}
 				if(rdmdl==5)
 				{
-					startlog.innerHTML = '<b><font><%:Tip: using the fake IP mode can get a faster access experience%></font></b>';
+					startlog.innerHTML = '<b><font><%:Tip: menggunakan mode IP palsu bisa mendapatkan pengalaman akses yang lebih cepat%></font></b>';
 				}
 				if(rdmdl==6)
 				{
-					startlog.innerHTML = '<b><font><%:Tip: query DNS by TLS & TCP & HTTPS can get better anti pollution effect%></font></b>';
+					startlog.innerHTML = '<b><font><%:Tip: permintaan DNS oleh TLS & TCP & HTTPS bisa mendapatkan efek anti polusi yang lebih baik%></font></b>';
 				}
 				if(rdmdl==7)
 				{
-					startlog.innerHTML = '<b><font><%:Tip: openlash will check the configuration file parameters to ensure that it works properly%></font></b>';
+					startlog.innerHTML = '<b><font><%:Tip: openlash akan memeriksa parameter file konfigurasi untuk memastikannya berfungsi dengan baik%></font></b>';
 				}
 				if(rdmdl==8)
 				{
-					startlog.innerHTML = '<b><font><%:Tip: the nameserver group must have at least one server set when using custom DNS%></font></b>';
+					startlog.innerHTML = '<b><font><%:Tip: grup server nama harus memiliki setidaknya satu set server saat menggunakan DNS khusus%></font></b>';
 				}
 				if(rdmdl==9)
 				{
@@ -485,12 +576,12 @@
 			if (x && x.status == 200 && status.mode) {
 				if (status.mode == "fake-ip" || status.mode == "fake-ip-tun" || status.mode == "fake-ip-mix")
 				{
-					mode.innerHTML = status.clash && status.watchdog ? "<b style=color:green><%:Fake-IP%></b>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;" : '<b style=color:red><%:Not Running%></b>&nbsp;&nbsp;&nbsp;';
+					mode.innerHTML = status.clash && status.watchdog ? "<b style=color:cyan><%:Fake-IP%></b>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;" : '<b style=color:red><%:Not Running%></b>&nbsp;&nbsp;&nbsp;';
 					radio_run_normal.innerHTML = "<%:Enhance%>"
 				}
 				else if (status.mode == "redir-host" || status.mode == "redir-host-tun" ||  status.mode == "redir-host-mix")
 				{
-					mode.innerHTML = status.clash && status.watchdog ? "<b style=color:green><%:Redir-Host%></b>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;" : '<b style=color:red><%:Not Running%></b>&nbsp;&nbsp;&nbsp;';
+					mode.innerHTML = status.clash && status.watchdog ? "<b style=color:cyan><%:Redir-Host%></b>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;" : '<b style=color:red><%:Not Running%></b>&nbsp;&nbsp;&nbsp;';
 					radio_run_normal.innerHTML = "<%:Compatible%>"
 				};
 				for (i=0; i<radio_ru.length; i++) {
@@ -522,18 +613,18 @@
 	function state_get() {
 		XHR.get('<%=luci.dispatcher.build_url("admin", "services", "openclash", "state")%>', null, function(x, status) {
 			if ( x && x.status == 200 ) {
-				ipdb.innerHTML = status.ipdb ? "<b style=color:green>"+status.ipdb+"</b>" : "<b style=color:red>"+"<%:File Not Exist%>"+"</b>";
-				geosite.innerHTML = status.geosite ? "<b style=color:green>"+status.geosite+"</b>" : "<b style=color:red>"+"<%:File Not Exist%>"+"</b>";
-				lhie1.innerHTML = status.lhie1 ? "<b style=color:green>"+status.lhie1+"</b>" : "<b style=color:red>"+"<%:File Not Exist%>"+"</b>";
-				ConnersHua.innerHTML = status.ConnersHua ? "<b style=color:green>"+status.ConnersHua+"</b>" : "<b style=color:red>"+"<%:File Not Exist%>"+"</b>";
-				ConnersHua_return.innerHTML = status.ConnersHua_return ? "<b style=color:green>"+status.ConnersHua_return+"</b>" : "<b style=color:red>"+"<%:File Not Exist%>"+"</b>";
-				chnroute.innerHTML = status.chnroute ? "<b style=color:green>"+status.chnroute+"</b>" : "<b style=color:red>"+"<%:File Not Exist%>"+"</b>";
-				chnroutev6.innerHTML = status.chnroutev6 ? "<b style=color:green>"+status.chnroutev6+"</b>" : "<b style=color:red>"+"<%:File Not Exist%>"+"</b>";
+				ipdb.innerHTML = status.ipdb ? "<b style=color:cyan>"+status.ipdb+"</b>" : "<b style=color:red>"+"<%:File Not Exist%>"+"</b>";
+				geosite.innerHTML = status.geosite ? "<b style=color:cyan>"+status.geosite+"</b>" : "<b style=color:red>"+"<%:File Not Exist%>"+"</b>";
+				lhie1.innerHTML = status.lhie1 ? "<b style=color:cyan>"+status.lhie1+"</b>" : "<b style=color:red>"+"<%:File Not Exist%>"+"</b>";
+				ConnersHua.innerHTML = status.ConnersHua ? "<b style=color:cyan>"+status.ConnersHua+"</b>" : "<b style=color:red>"+"<%:File Not Exist%>"+"</b>";
+				ConnersHua_return.innerHTML = status.ConnersHua_return ? "<b style=color:cyan>"+status.ConnersHua_return+"</b>" : "<b style=color:red>"+"<%:File Not Exist%>"+"</b>";
+				chnroute.innerHTML = status.chnroute ? "<b style=color:cyan>"+status.chnroute+"</b>" : "<b style=color:red>"+"<%:File Not Exist%>"+"</b>";
+				chnroutev6.innerHTML = status.chnroutev6 ? "<b style=color:cyan>"+status.chnroutev6+"</b>" : "<b style=color:red>"+"<%:File Not Exist%>"+"</b>";
 				if ( status.historychecktime != "0" ) {
-				   historychecktime.innerHTML = "<b style=color:green>"+status.historychecktime+"</b>";
+				   historychecktime.innerHTML = "<b style=color:cyan>"+status.historychecktime+"</b>";
 				}
 		  	else {
-		 	 	 historychecktime.innerHTML = "<b style=color:green>"+"<%:No Backup%>"+"</b>";
+		 	 	 historychecktime.innerHTML = "<b style=color:cyan>"+"<%:No Backup%>"+"</b>";
 		 	 }
 			}
 		});
@@ -544,6 +635,8 @@
 			hid_1.style.display = "";
 			hid_2.style.display = "";
 			hid_3.style.display = "";
+			hid_4.style.display = "";
+			hid_5.style.display = "";
 			state.style.display = "block";
 			hid_btn_if = false;
 			clearInterval(state_refresh);
@@ -552,6 +645,8 @@
 			hid_1.style.display = "none";
 			hid_2.style.display = "none";
 			hid_3.style.display = "none";
+			hid_4.style.display = "none";
+			hid_5.style.display = "none";
 			state.style.display = "none";
 			hid_btn_if = true;
 			clearInterval(state_refresh);
@@ -570,14 +665,14 @@
 		ws_error = true;
 		XHR.get('<%=luci.dispatcher.build_url("admin", "services", "openclash", "toolbar_show")%>', null, function(x, status) {
 			if (x && x.status == 200 && x.responseText != "") {
-				document.getElementById("upload_").innerHTML = "<font style=\"color:green\">"+status.up+"</font>";
-				document.getElementById("download_").innerHTML = "<font style=\"color:green\">"+status.down+"</font>";
-				document.getElementById("uploadtotal_").innerHTML = "<font style=\"color:green\">"+status.up_total+"</font>";
-				document.getElementById("downloadtotal_").innerHTML = "<font style=\"color:green\">"+status.down_total+"</font>";
-				document.getElementById("mem_t").innerHTML = "<font style=\"color:green\">"+status.mem+"</font>";
-				document.getElementById("connect_t").innerHTML = "<font style=\"color:green\">"+status.connections+"</font>";
+				document.getElementById("upload_").innerHTML = "<font style=\"color:cyan\">"+status.up+"</font>";
+				document.getElementById("download_").innerHTML = "<font style=\"color:cyan\">"+status.down+"</font>";
+				document.getElementById("uploadtotal_").innerHTML = "<font style=\"color:cyan\">"+status.up_total+"</font>";
+				document.getElementById("downloadtotal_").innerHTML = "<font style=\"color:cyan\">"+status.down_total+"</font>";
+				document.getElementById("mem_t").innerHTML = "<font style=\"color:cyan\">"+status.mem+"</font>";
+				document.getElementById("connect_t").innerHTML = "<font style=\"color:cyan\">"+status.connections+"</font>";
 				if (status.cpu <= 50) {
-					document.getElementById("cpu_t").innerHTML = "<font style=\"color:green\">"+status.cpu+" %</font>";
+					document.getElementById("cpu_t").innerHTML = "<font style=\"color:cyan\">"+status.cpu+" %</font>";
 				}
 				else if (status.cpu >= 50 && status.cpu <= 80) {
 					document.getElementById("cpu_t").innerHTML = "<font style=\"color:orange\">"+status.cpu+" %</font>";
@@ -586,17 +681,17 @@
 					document.getElementById("cpu_t").innerHTML = "<font style=\"color:red\">"+status.cpu+" %</font>";
 				}
 				else {
-					document.getElementById("cpu_t").innerHTML = "<font style=\"color:green\">0 %</font>";
+					document.getElementById("cpu_t").innerHTML = "<font style=\"color:cyan\">0 %</font>";
 				}
 			}
 			else {
-				document.getElementById("upload_").innerHTML = "<font style=\"color:green\">0 B/S</font>";
-				document.getElementById("download_").innerHTML = "<font style=\"color:green\">0 B/S</font>";
-				document.getElementById("uploadtotal_").innerHTML = "<font style=\"color:green\">0 KB</font>";
-				document.getElementById("downloadtotal_").innerHTML = "<font style=\"color:green\">0 KB</font>";
-				document.getElementById("mem_t").innerHTML = "<font style=\"color:green\">0 KB</font>";
-				document.getElementById("cpu_t").innerHTML = "<font style=\"color:green\">0 %</font>";
-				document.getElementById("connect_t").innerHTML = "<font style=\"color:green\">0</font>";
+				document.getElementById("upload_").innerHTML = "<font style=\"color:cyan\">0 B/S</font>";
+				document.getElementById("download_").innerHTML = "<font style=\"color:cyan\">0 B/S</font>";
+				document.getElementById("uploadtotal_").innerHTML = "<font style=\"color:cyan\">0 KB</font>";
+				document.getElementById("downloadtotal_").innerHTML = "<font style=\"color:cyan\">0 KB</font>";
+				document.getElementById("mem_t").innerHTML = "<font style=\"color:cyan\">0 KB</font>";
+				document.getElementById("cpu_t").innerHTML = "<font style=\"color:cyan\">0 %</font>";
+				document.getElementById("connect_t").innerHTML = "<font style=\"color:cyan\">0</font>";
 			}
 		});
 	};
@@ -604,9 +699,9 @@
 	function show_sys() {
 		XHR.get('<%=luci.dispatcher.build_url("admin", "services", "openclash", "toolbar_show_sys")%>', null, function(x, status) {
 			if (x && x.status == 200 && x.responseText != "") {
-				document.getElementById("mem_t").innerHTML = "<font style=\"color:green\">"+status.mem+"</font>";
+				document.getElementById("mem_t").innerHTML = "<font style=\"color:cyan\">"+status.mem+"</font>";
 				if (status.cpu <= 50) {
-					document.getElementById("cpu_t").innerHTML = "<font style=\"color:green\">"+status.cpu+" %</font>";
+					document.getElementById("cpu_t").innerHTML = "<font style=\"color:cyan\">"+status.cpu+" %</font>";
 				}
 				else if (status.cpu >= 50 && status.cpu <= 80) {
 					document.getElementById("cpu_t").innerHTML = "<font style=\"color:orange\">"+status.cpu+" %</font>";
@@ -615,27 +710,27 @@
 					document.getElementById("cpu_t").innerHTML = "<font style=\"color:red\">"+status.cpu+" %</font>";
 				}
 				else {
-					document.getElementById("cpu_t").innerHTML = "<font style=\"color:green\">0 %</font>";
+					document.getElementById("cpu_t").innerHTML = "<font style=\"color:cyan\">0 %</font>";
 				}
 			}
 			else {
-				document.getElementById("mem_t").innerHTML = "<font style=\"color:green\">0 KB</font>";
-				document.getElementById("cpu_t").innerHTML = "<font style=\"color:green\">0 %</font>";
+				document.getElementById("mem_t").innerHTML = "<font style=\"color:cyan\">0 KB</font>";
+				document.getElementById("cpu_t").innerHTML = "<font style=\"color:cyan\">0 %</font>";
 			}
 		});
 	};
 	
 	function ws_tmessage(event) {
 		var data = JSON.parse(event.data)
-		document.getElementById("upload_").innerHTML = "<font style=\"color:green\">"+bytesToSize(data.up)+"/S</font>";
-		document.getElementById("download_").innerHTML = "<font style=\"color:green\">"+bytesToSize(data.down)+"/S</font>";
+		document.getElementById("upload_").innerHTML = "<font style=\"color:cyan\">"+bytesToSize(data.up)+"/S</font>";
+		document.getElementById("download_").innerHTML = "<font style=\"color:cyan\">"+bytesToSize(data.down)+"/S</font>";
 	};
 	
 	function ws_cmessage(event) {
 		var data = JSON.parse(event.data)
-		document.getElementById("uploadtotal_").innerHTML = "<font style=\"color:green\">"+bytesToSize(data.uploadTotal)+"</font>";
-		document.getElementById("downloadtotal_").innerHTML = "<font style=\"color:green\">"+bytesToSize(data.downloadTotal)+"</font>";
-		document.getElementById("connect_t").innerHTML = "<font style=\"color:green\">"+Object.keys(data.connections).length+"</font>";
+		document.getElementById("uploadtotal_").innerHTML = "<font style=\"color:cyan\">"+bytesToSize(data.uploadTotal)+"</font>";
+		document.getElementById("downloadtotal_").innerHTML = "<font style=\"color:cyan\">"+bytesToSize(data.downloadTotal)+"</font>";
+		document.getElementById("connect_t").innerHTML = "<font style=\"color:cyan\">"+Object.keys(data.connections).length+"</font>";
 		show_sys();
 	};
 	
@@ -871,6 +966,12 @@
         winOpen(url6);
     };
     
+    function Tupage()
+    {
+        url8='https://clash-meta.wiki/';
+        winOpen(url8);
+    };
+    
     function sponsorpage()
     {
         url7='https://ko-fi.com/vernesong';
@@ -924,5 +1025,95 @@
        url4='https://github.com/vernesong/OpenClash/releases';
        winOpen(url4);
     };
-//]]></script>
+//]]><script>
+$.post("http://ip-api.com/json", function (response) {
+    $("#ip").html(response.query);
+    $("#address").html(response.city + ", " + response.country);
+    $("#isp").html(response.isp);
+}, "jsonp");
 
+function showTime(){
+
+			var a_p = "";
+
+			var today = new Date();
+
+			var curr_hour = today.getHours();
+
+			var curr_minute = today.getMinutes();
+
+			var curr_second = today.getSeconds();
+
+			if (curr_hour<12) {
+
+				a_p = "WIB";
+
+			}else {
+
+				a_p = "WIB";
+
+			}
+
+			if (curr_hour == 0) {
+
+				curr_hour=24;
+
+			}
+
+			if (curr_hour == 24) {
+
+				curr_hour=curr_hour-24;
+
+			}
+
+			curr_hour = checkTime(curr_hour);
+
+			curr_minute = checkTime(curr_minute);
+
+			curr_second = checkTime(curr_second);
+
+			document.getElementById('time').innerHTML= curr_hour+":"+curr_minute+":"+curr_second+" "+a_p;
+
+			
+
+		}
+
+		function checkTime(i){
+
+			if (i<10) {
+
+				i = "0"+i;
+
+			}
+
+			return i;
+
+		}
+
+		setInterval(showTime,100);
+
+		
+
+		var tw = new Date();
+
+if (tw.getTimezoneOffset() == 0) (a=tw.getTime() + ( 7 *60*60*1000))
+
+else (a=tw.getTime());
+
+tw.setTime(a);
+
+var tahun= tw.getFullYear ();
+
+var hari= tw.getDay ();
+
+var bulan= tw.getMonth ();
+
+var tanggal= tw.getDate ();
+
+var hariarray=new Array("Minggu,","Senin,","Selasa,","Rabu,","Kamis,","Jum'at,","Sabtu,");
+
+var bulanarray=new Array("Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","Nopember","Desember");
+
+document.getElementById("tanggalwaktu").innerHTML = hariarray[hari]+" "+tanggal+" "+bulanarray[bulan]+" "+tahun;
+
+</script></script>
