@@ -1,0 +1,45 @@
+payload:
+  # Mulai baris ini kebawah bisa di edit/hapus
+  #MLBB
+  - DOMAIN-SUFFIX,mobilelegends.com
+  - DOMAIN-SUFFIX,mobilelegends.ca
+  - DOMAIN-SUFFIX,mobilelegends.cn
+  - DOMAIN-SUFFIX,mobilelegends.co.kr
+  - DOMAIN-SUFFIX,mobilelegends.info
+  - DOMAIN-SUFFIX,mobilelegends.kr
+  - DOMAIN-SUFFIX,mobilelegends.net
+  - DOMAIN-SUFFIX,mobilelegends.org
+  - DOMAIN-SUFFIX,mobilelegends.com.cn
+  - DOMAIN-SUFFIX,youngjoygame.com
+  - DOMAIN-SUFFIX,yuanzhanapp.com
+  - DOMAIN-SUFFIX,aihelp.net
+  - DOMAIN,tnc16-alisg.isnssdk.com
+  - DOMAIN,gplog-sg.byteoversea.com
+  - DOMAIN,xlog.byteoversea.com
+  #- DOMAIN-KEYWORD,ml
+  - DOMAIN-KEYWORD,mobilelegends
+  - DOMAIN-KEYWORD,aihelp
+  - DOMAIN-KEYWORD,yuanzapp
+  - DOMAIN-SUFFIX,gplog-sg.byteoversea.com
+  - DOMAIN-SUFFIX,ip.ml.youngjoygame.com
+  - DOMAIN-SUFFIX,akmcdn.ml.youngjoygame.com
+  - DOMAIN-SUFFIX,akmpicture.youngjoygame.com
+  - DOMAIN-SUFFIX,xlog.byteoversea.com
+  - DOMAIN-SUFFIX,akmstatic.ml.youngjoygame.com
+  - DOMAIN-SUFFIX,tnc16-alisg.isnssdk.com
+  - DOMAIN-SUFFIX,ml.aihelp.net
+  - DOMAIN-SUFFIX,login.ml.youngjoygame.com
+  - DOMAIN-SUFFIX,newlogin.ml.mlbangbang.com
+  - DOMAIN-SUFFIX,report.ml.youngjoygame.com
+  - DOMAIN-SUFFIX,rtc.rtcplus.com
+  - DOMAIN-SUFFIX,rtc-access.rtcplus.com
+  - DOMAIN-SUFFIX,rtc-access-sg.rtcplus.com
+  - DOMAIN-SUFFIX,rtc-access-va.rtcplus.com
+  - DOMAIN-SUFFIX,rtc-access-fr.rtcplus.com
+  - DOMAIN-SUFFIX,log-report.rtcplus.com
+  - DOMAIN-SUFFIX,www.bytedance.com
+  - DOMAIN-SUFFIX,gsdk-va.bytegsdk.com
+  - DOMAIN-SUFFIX,xlog.byteoversea.com
+  - DOMAIN-SUFFIX,tnc16-alisg.isnssdk.com
+  - DOMAIN-SUFFIX,log-va.bytegsdk.com
+  - DOMAIN-SUFFIX,gpm-mon-va.bytegsdk.com

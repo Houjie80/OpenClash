@@ -1,0 +1,65 @@
+payload:
+
+  ## > LINTAS PACU PENGAMANAN DARI SI KECIL
+  
+  # > JALUR KE REJECT
+  - DOMAIN-KEYWORD,sex
+  - DOMAIN-KEYWORD,ngentot
+  - DOMAIN-KEYWORD,xnxx
+  - DOMAIN-KEYWORD,xbrazzer
+  - DOMAIN-KEYWORD,adult
+  - DOMAIN-KEYWORD,lgbt
+  - DOMAIN-KEYWORD,mesum
+  - DOMAIN-KEYWORD,sexual
+  - DOMAIN-KEYWORD,seks
+  - DOMAIN-KEYWORD,porn
+  - DOMAIN-KEYWORD,porno
+  - DOMAIN-KEYWORD,pornhub
+  - DOMAIN-KEYWORD,xvideos
+  - DOMAIN-KEYWORD,fuq
+  - DOMAIN-KEYWORD,ixxx
+  - DOMAIN-KEYWORD,asiaone
+  - DOMAIN-KEYWORD,4porn
+  - DOMAIN-KEYWORD,theporndude
+  - DOMAIN-KEYWORD,youporn
+  - DOMAIN-KEYWORD,bellesa
+  - DOMAIN-KEYWORD,xhamter
+  - DOMAIN-KEYWORD,18porn
+  - DOMAIN-KEYWORD,japanese
+  - DOMAIN-KEYWORD,spankbang
+  - DOMAIN-KEYWORD,youjizz
+  - DOMAIN-KEYWORD,alohatube
+  - DOMAIN-KEYWORD,togel
+  - DOMAIN-KEYWORD,stjuliarie
+  - DOMAIN-KEYWORD,apssr
+  - DOMAIN-KEYWORD,drawfor
+  - DOMAIN-KEYWORD,chinnar
+  - DOMAIN-KEYWORD,researchscript
+  - DOMAIN-KEYWORD,hardboprecords
+  - DOMAIN-KEYWORD,camtechuganda
+  - DOMAIN-KEYWORD,stbenetsabbey
+  - DOMAIN-KEYWORD,binweevils
+  - DOMAIN-KEYWORD,piemontearte
+  - DOMAIN-KEYWORD,judi
+  - DOMAIN-KEYWORD,poker
+  - DOMAIN-KEYWORD,lottery
+  - DOMAIN-KEYWORD,gambling
+  #Situs Porno
+  - DOMAIN-KEYWORD,javhd
+  - DOMAIN-KEYWORD,xxx
+  - DOMAIN-SUFFIX,javhd.com
+  - DOMAIN-SUFFIX,api.v-mate.mobi
+  - DOMAIN-SUFFIX,pornhub.com
+  - DOMAIN-SUFFIX,xnxx,com
+  - DOMAIN-SUFFIX,xvideos.com
+  - DOMAIN-SUFFIX,bokep.com
+  - DOMAIN-SUFFIX,pornhd.com
+  - DOMAIN-SUFFIX,xhamster.com
+  - DOMAIN-SUFFIX,n-hentai.com
+  - DOMAIN-SUFFIX,cdn77-vid-mp4.xnxx-cdn.com
+  - DOMAIN-SUFFIX,video-hw.xnxx-cdn.com
+  - DOMAIN-SUFFIX,img-l3.xnxx-cdn.com  
+  - DOMAIN-SUFFIX,img-hw.xnxx-cdn.com
+    #Situs Porno
+  
+  
