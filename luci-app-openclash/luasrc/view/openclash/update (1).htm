@@ -1,24 +1,5 @@
-<style>
-	table {
-color: cyan;
-background-color: black;
-border: 3px solid #5DD6F3;
-border-radius: 10px;
-}
-.td{
-color:cyan;
-background-color: black;
-}
-.yu{
-color:cyan;
-background-color: black;
-}
-.tr{
-color:cyan;
-background-color: black;
-}
-</style>
-<fieldset class="yu">
+
+<fieldset class="cbi-section">
 	<table border width="100%">
 	  <tr><td width="100%" colspan="4" style=color:cyan>
 	    <p align="center" id="update_tip">
@@ -53,23 +34,23 @@ background-color: black;
 			<td width="25%"><%:Last Check Update%></td><td width="25%" align="left" id="CHECKTIME"><%:Collecting data...%></td>
 		</tr>
 	  <tr><td width="100%" colspan="4" style=color:cyan>
-	    <marquee scrollamount="5"><p style="margin: 0px 0; text-align: center">
-	  		<b style=font-size:14px><%:Core path:%>/etc/openclash/core/clash</b>
-	  	</p></marquee>
+	    <p align="center">
+	  		<b><%:Core path:%>/etc/openclash/core/clash</b>
+	  	</p>
 	  </td></tr>
 		<tr><td width="25%">[Dev] <%:Current Core%></td><td width="25%" align="left" id="CORE_CV"><%:Collecting data...%></td><td width="25%">[Dev] <%:Latest Core%></td><td width="25%" align="left" id="CORE_LV"><%:Collecting data...%></td></tr>
 		<tr><td width="25%"><%:Update Core%></td><td width="25%" align="left" id="core_up"><%:Collecting data...%></td><td width="25%"><%:Download Latest Core%></td><td width="25%" align="left" id="ma_core_up"><%:Collecting data...%></td></tr>
 		<tr><td width="100%" colspan="4" style=color:cyan>
-	    <marquee scrollamount="5"><p style="margin: 0px 0; text-align: center">
-	  		<b style=font-size:14px><%:Core path:%>/etc/openclash/core/clash_tun</b>
-	  	</p></marquee>
+	    <p align="center">
+	  		<b><%:Core path:%>/etc/openclash/core/clash_tun</b>
+	  	</p>
 	  </td></tr>
 		<tr><td width="25%">[TUN] <%:Current Core%></td><td width="25%" align="left" id="CORE_TUN_CV"><%:Collecting data...%></td><td width="25%">[TUN] <%:Latest Core%></td><td width="25%" align="left" id="CORE_TUN_LV"><%:Collecting data...%></td></tr>
 		<tr><td width="25%"><%:Update Core%></td><td width="25%" align="left" id="core_tun_up"><%:Collecting data...%></td><td width="25%"><%:Download Latest Core%></td><td width="25%" align="left" id="ma_core_tun_up"><%:Collecting data...%></td></tr>
 		<tr><td width="100%" colspan="4" style=color:cyan>
-	    <marquee scrollamount="5"><p style="margin: 0px 0; text-align: center">
-	  		<b style=font-size:14px><%:Core path:%>/etc/openclash/core/clash_meta</b>
-	  	</p></marquee>
+	    <p align="center">
+	  		<b><%:Core path:%>/etc/openclash/core/clash_meta</b>
+	  	</p>
 	  </td></tr>
 		<tr><td width="25%">[Meta] <%:Current Core%></td><td width="25%" align="left" id="CORE_META_CV"><%:Collecting data...%></td><td width="25%">[Meta] <%:Latest Core%></td><td width="25%" align="left" id="CORE_META_LV"><%:Collecting data...%></td></tr>
 		<tr><td width="25%"><%:Update Core%></td><td width="25%" align="left" id="core_meta_up"><%:Collecting data...%></td><td width="25%"><%:Download Latest Core%></td><td width="25%" align="left" id="ma_core_meta_up"><%:Collecting data...%></td></tr>
@@ -78,21 +59,21 @@ background-color: black;
 <fieldset class="cbi-section">
 	<table border width="100%">
 		<tr><td width="100%" colspan="4" style=color:cyan>
-	    <marquee scrollamount="4"><p style="margin: 0px 0; text-align: center">
-	  		<b style=font-size:14px><%:Client Update%></b>
-	  	</p></marquee>
+	    <p align="center">
+	  		<b><%:Client Update%></b>
+	  	</p>
 	  </td></tr>
 		<tr><td width="25%"><%:Current Client%></td><td width="25%" align="left" id="OP_CV"><%:Collecting data...%></td><td width="25%"><%:Latest Client%></td><td width="25%" align="left" id="OP_LV"><%:Collecting data...%></td></tr>
 	  <tr><td width="25%"><%:Update Client%></td><td width="25%" align="left" id="op_up"><%:Collecting data...%></td><td width="25%"><%:Download Latest Client%></td><td width="25%" align="left" id="ma_op_up"><%:Collecting data...%></td></tr>
 	</table>
 </fieldset>
 <fieldset class="cbi-section">
-	<table border width="100%">
+	<table border width="80%">
 	  <tr>
 	  	<tr><td width="100%" colspan="4" style=color:cyan>
-	    <marquee scrollamount="6"><p style="margin: 0px 0; text-align: center">
-	  		<b style=font-size:14px><%:restore%></b>
-	  	</p></marquee>
+	    <p align="center">
+	  		<b><%:restore%></b>
+	  	</p>
 	  </td></tr>
 	  	<td width="25%">
 	  	   <p align="center" id="restore">
@@ -112,10 +93,10 @@ background-color: black;
 </fieldset>
 <fieldset class="cbi-section">
    <table border="1" cellpadding="10" width="100%">
-		<tr><td width="100%" colspan="4" style=color:cyan font-size=18px>
-	    <marquee scrollamount="5"><p style="margin: 0px 0; text-align: center font-size:18px">
-	  		<b style=font-size:14px><%:Backup Section%></b>
-	  </p></marquee>
+		<tr><td width="100%" colspan="4" style=color:green>
+	    <p align="center">
+	  		<b><%:Backup Section%></b>
+	  	</p>
 		</td></tr>
 		<tr>
 	  	<td width="25%">

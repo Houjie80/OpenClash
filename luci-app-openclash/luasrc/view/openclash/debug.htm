@@ -18,8 +18,8 @@ local dns_host = "www.instagram.com"
     -moz-border-radius: 3px;
     white-space: pre-wrap;
     word-wrap: break-word;
-    font-size: 1.4rem;
-    color: #404040;
+    font-size: 13px;
+    color: cyan;
 }
 
 #dns-rc-output > pre {
@@ -31,8 +31,33 @@ local dns_host = "www.instagram.com"
     -moz-border-radius: 3px;
     white-space: pre-wrap;
     word-wrap: break-word;
-    font-size: 1.4rem;
-    color: #404040;
+    font-size: 13px;
+    color: cyan;
+}
+
+.developer_ {
+  text-align: justify;
+  text-align-last: justify;
+  color:cyan;
+}
+.freqOptionLock {
+clear:both;
+padding:10px 10px 5px 10px;
+margin-bottom:4px;
+font-size: 12px;
+border: 3px solid #5DD6F3;
+border-radius: 10px;
+background-color: black;
+}
+
+.blink_me {
+  animation: blinker 2s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
 }
 
 </style>
@@ -181,7 +206,7 @@ local dns_host = "www.instagram.com"
 //]]></script>
 
 <form>
-	<fieldset>
+	<fieldset class="freqOptionLock">
 		<div style="width:33%; float: left; text-align: center;">
 			<%:Connection Test (Current Browser)%>&nbsp;&nbsp;&nbsp;&nbsp;
 			<input type="text" value="<%=diag_host%>" name="diag" />
@@ -192,7 +217,7 @@ local dns_host = "www.instagram.com"
 			<input type="text" value="<%=dns_host%>" name="dns_host" />
 			<input type="button" value="<%:Click to Test%>" class="btn cbi-button cbi-button-apply" onclick="diag_dns(this.form.dns_host)" />
 		</div>
-		<div style="width:33%; float: left; text-align: center;">
+		<div style="width:34%; float: left; text-align: center;">
 			<%:Generate Logs%>&nbsp;&nbsp;&nbsp;&nbsp;
 			<input type="button" value="<%:Click to Generate%>" class="btn cbi-button cbi-button-apply" onclick="gen_debug_logs(this)" />
 		</div>
