@@ -77,7 +77,13 @@ border-radius: 5px;
 background-color: black;
 }
 </style>
-</head>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <meta charset="utf-8">
+    <title>IP Address</title>
+    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+    </script>
+  </head>
 <%
 	local uci = require("luci.model.uci").cursor()
 	local RELEASE_BRANCH = uci:get("openclash", "config", "release_branch")
@@ -443,7 +449,21 @@ background-color: black;
 			};
 		}
 		else if ( status.startlog != "\n" && status.startlog != "" ) {
-	    	startlog.innerHTML = '<b style=color:cyan>'+status.startlog+'</b>';
+			if ( status.startlog.match("Tip:") || status.startlog.match("提示：")) {
+				startlog.innerHTML = '<b style=color:#ff6f00>'+status.startlog+'</b>';
+			}
+			else if ( status.startlog.match("Error:") || status.startlog.match("错误：")) {
+				startlog.innerHTML = '<b style=color:#FF0000>'+status.startlog+'</b>';
+			}
+			else if ( status.startlog.match("Warning:") || status.startlog.match("警告：")) {
+	    		startlog.innerHTML = '<b style=color:#ff00bb>'+status.startlog+'</b>';
+			}
+			else if ( status.startlog.match("Watchdog:") || status.startlog.match("守护程序：")) {
+	    		startlog.innerHTML = '<b style=color:#b300ff>'+status.startlog+'</b>';
+			}
+			else {
+	    		startlog.innerHTML = '<b style=color:cyan>'+status.startlog+'</b>';
+			};
 		};
 	  };
 	});
@@ -1025,12 +1045,13 @@ background-color: black;
        url4='https://github.com/vernesong/OpenClash/releases';
        winOpen(url4);
     };
-//]]><script>
-$.post("http://ip-api.com/json", function (response) {
-    $("#ip").html(response.query);
-    $("#address").html(response.city + ", " + response.country);
-    $("#isp").html(response.isp);
-}, "jsonp");
+//]]><script type="text/javascript">
+      $.getJSON('https://ipapi.co/json/', function(data){
+        $("#ip").text(data.ip);
+        $('#isp').text(data.org);
+        $('#address').text(data.region + ", " + data.country_name);
+        $('#city').text(data.region);
+      })
 
 function showTime(){
 
