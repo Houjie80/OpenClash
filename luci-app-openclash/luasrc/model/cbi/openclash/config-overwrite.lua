@@ -135,6 +135,27 @@ o = s:taboption("dns", Flag, "enable_custom_dns", font_red..bold_on..translate("
 o.description = font_red..bold_on..translate("Set OpenClash Upstream DNS Resolve Server")..bold_off..font_off
 o.default = 0
 
+---- Fallback DNS Proxy Group
+o = s:taboption("dns", Value, "proxy_dns_group", font_red..bold_on..translate("Fallback DNS Proxy Group (Support Regex)")..bold_off..font_off)
+o.description = translate("Group Use For Proxy The Fallback DNS, Preventing DNS Lookup Failures")..translate("(Only Meta Core)")
+local groupnames,filename
+filename = m.uci:get("openclash", "config", "config_path")
+if filename then
+	groupnames = SYS.exec(string.format('ruby -ryaml -rYAML -I "/usr/share/openclash" -E UTF-8 -e "YAML.load_file(\'%s\')[\'proxy-groups\'].each do |i| puts i[\'name\']+\'##\' end" 2>/dev/null',filename))
+	if groupnames then
+		for groupname in string.gmatch(groupnames, "([^'##\n']+)##") do
+			if groupname ~= nil and groupname ~= "" then
+				o:value(groupname)
+			end
+		end
+	end
+end
+
+o:value("DIRECT")
+o:value("Disable", translate("Disable"))
+o.default = "Disable"
+o.rempty = false
+
 o = s:taboption("dns", Flag, "append_wan_dns", translate("Append Upstream DNS"))
 o.description = translate("Append The Upstream Assigned DNS And Gateway IP To The Nameserver")
 o.default = 1
@@ -266,7 +287,15 @@ o.description = font_red..bold_on..translate("TCP Concurrent Request IPs, Choose
 o.default = "0"
 
 o = s:taboption("meta", Flag, "enable_unified_delay", font_red..bold_on..translate("Enable Unified Delay")..bold_off..font_off)
-o.description = font_red..bold_on..translate("Change the delay calculation method to remove extra delays such as handshaking")..bold_off..font_off
+o.description = font_red..bold_on..translate("Change The Delay Calculation Method To Remove Extra Delays Such as Handshaking")..bold_off..font_off
+o.default = "0"
+
+o = s:taboption("meta", ListValue, "keep_alive_interval", font_red..bold_on..translate("TCP Keep-alive Interval(s)")..bold_off..font_off)
+o.description = font_red..bold_on..translate("Change The TCP Keep-alive Interval, Selecting a Larger Value Avoids Abnormal Resource Consumption")..bold_off..font_off
+o:value("0", translate("Disable"))
+o:value("15")
+o:value("1800")
+o:value("3600")
 o.default = "0"
 
 o = s:taboption("meta", ListValue, "find_process_mode", translate("Enable Process Rule"))

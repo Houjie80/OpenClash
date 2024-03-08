@@ -34,7 +34,7 @@ jobs:
       - name: Clone Clash Meta Repository
         uses: actions/checkout@v3
         with:
-          repository: MetaCubeX/Clash.Meta
+          repository: MetaCubeX/mihomo
           ref: Alpha
       
       - name: Get Upstream Version
@@ -77,13 +77,13 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v3
         with:
-          go-version: "1.21"
+          go-version: "1.22"
           check-latest: true
 
       - name: Clone Clash Meta Repository
         uses: actions/checkout@v3
         with:
-          repository: MetaCubeX/Clash.Meta
+          repository: MetaCubeX/mihomo
           ref: Alpha
       
       - name: Compile Meta Clash
