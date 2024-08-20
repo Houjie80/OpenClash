@@ -17,8 +17,20 @@ bold_off = [[</strong>]]
 
 local op_mode = string.sub(luci.sys.exec('uci get openclash.config.operation_mode 2>/dev/null'),0,-2)
 if not op_mode then op_mode = "redir-host" end
-local lan_ip = SYS.exec("uci -q get network.lan.ipaddr |awk -F '/' '{print $1}' 2>/dev/null |tr -d '\n' || ip address show $(uci -q -p /tmp/state get network.lan.ifname || uci -q -p /tmp/state get network.lan.device) | grep -w 'inet'  2>/dev/null |grep -Eo 'inet [0-9\.]+' | awk '{print $2}' | tr -d '\n' || ip addr show 2>/dev/null | grep -w 'inet' | grep 'global' | grep 'brd' | grep -Eo 'inet [0-9\.]+' | awk '{print $2}' | head -n 1 | tr -d '\n'")
+local lan_int_name = uci:get("openclash", "config", "lan_interface_name") or "0"
 
+local lan_ip
+if lan_int_name == "0" then
+	lan_ip = SYS.exec("uci -q get network.lan.ipaddr |awk -F '/' '{print $1}' 2>/dev/null |tr -d '\n'")
+else
+	lan_ip = SYS.exec(string.format("ip address show %s | grep -w 'inet' 2>/dev/null |grep -Eo 'inet [0-9\.]+' | awk '{print $2}' | tr -d '\n'", lan_int_name))
+end
+if not lan_ip or lan_ip == "" then
+	lan_ip = luci.sys.exec("ip address show $(uci -q -p /tmp/state get network.lan.ifname || uci -q -p /tmp/state get network.lan.device) | grep -w 'inet'  2>/dev/null |grep -Eo 'inet [0-9\.]+' | awk '{print $2}' | tr -d '\n'")
+end
+if not lan_ip or lan_ip == "" then
+	lan_ip = luci.sys.exec("ip addr show 2>/dev/null | grep -w 'inet' | grep 'global' | grep 'brd' | grep -Eo 'inet [0-9\.]+' | awk '{print $2}' | head -n 1 | tr -d '\n'")
+end
 m = Map("openclash", translate("Overwrite Settings"))
 m.pageaction = false
 m.description = translate("Note: To restore the default configuration, try accessing:").." <a href='javascript:void(0)' onclick='javascript:restore_config(this)'>http://"..lan_ip.."/cgi-bin/luci/admin/services/openclash/restore</a>"
@@ -69,7 +81,7 @@ o:value("http://captive.apple.com/generate_204")
 o.default = "0"
 
 o = s:taboption("settings", Value, "github_address_mod", translate("Github Address Modify"))
-o.description = translate("Modify The Github Address In The Config And OpenClash With Proxy(CDN) To Prevent File Download Faild. Format Reference:").." ".."<a href='javascript:void(0)' onclick='javascript:return winOpen(\"https://ghproxy.com/\")'>https://ghproxy.com/</a>"
+o.description = translate("Modify The Github Address In The Config And OpenClash With Proxy(CDN) To Prevent File Download Faild. Format Reference:").." ".."<a href='javascript:void(0)' onclick='javascript:return winOpen(\"https://mirror.ghproxy.com/\")'>https://mirror.ghproxy.com/</a>"
 o:value("0", translate("Disable"))
 o:value("https://fastly.jsdelivr.net/")
 o:value("https://testingcf.jsdelivr.net/")
@@ -561,10 +573,6 @@ o = ss:option(DummyValue, "rule_name", translate("Other Rules Name"))
 function o.cfgvalue(...)
 	if Value.cfgvalue(...) == "lhie1" then
 		return translate("lhie1 Rules")
-	elseif Value.cfgvalue(...) == "ConnersHua" then
-		return translate("ConnersHua(Provider-type) Rules")
-	elseif Value.cfgvalue(...) == "ConnersHua_return" then
-		return translate("ConnersHua Return Rules")
 	else
 		return translate("None")
 	end

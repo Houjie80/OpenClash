@@ -103,6 +103,9 @@ local json = require "luci.jsonc"
 local uci = require("luci.model.uci").cursor()
 local datatype = require "luci.cbi.datatypes"
 local opkg
+local device_name = uci:get("system", "@system[0]", "hostname")
+local device_arh = luci.sys.exec("uname -m |tr -d '\n'")
+
 if pcall(require, "luci.model.ipkg") then
 	opkg = require "luci.model.ipkg"
 end
@@ -175,7 +178,13 @@ local function chnroutev6()
 end
 
 local function daip()
-	local daip = luci.sys.exec("uci -q get network.lan.ipaddr |awk -F '/' '{print $1}' 2>/dev/null |tr -d '\n'")
+	local daip, lan_int_name
+	lan_int_name = uci:get("openclash", "config", "lan_interface_name") or "0"
+	if lan_int_name == "0" then
+		daip = luci.sys.exec("uci -q get network.lan.ipaddr |awk -F '/' '{print $1}' 2>/dev/null |tr -d '\n'")
+	else
+		daip = luci.sys.exec(string.format("ip address show %s | grep -w 'inet'  2>/dev/null |grep -Eo 'inet [0-9\.]+' | awk '{print $2}' | tr -d '\n'", lan_int_name))
+	end
 	if not daip or daip == "" then
 		daip = luci.sys.exec("ip address show $(uci -q -p /tmp/state get network.lan.ifname || uci -q -p /tmp/state get network.lan.device) | grep -w 'inet'  2>/dev/null |grep -Eo 'inet [0-9\.]+' | awk '{print $2}' | tr -d '\n'")
 	end
@@ -345,21 +354,19 @@ local function historychecktime()
 end
 
 function core_download()
-	if uci:get("openclash", "config", "github_address_mod") == "0" or not uci:get("openclash", "config", "github_address_mod") then
-		uci:set("openclash", "config", "github_address_mod", "https://testingcf.jsdelivr.net/")
-		uci:commit("openclash")
-		luci.sys.call("rm -rf /tmp/clash_last_version 2>/dev/null && bash /usr/share/openclash/clash_version.sh >/dev/null 2>&1")
-		luci.sys.call("bash /usr/share/openclash/openclash_core.sh 'Dev' >/dev/null 2>&1 &")
-		luci.sys.call("bash /usr/share/openclash/openclash_core.sh 'TUN' >/dev/null 2>&1 &")
-		luci.sys.call("bash /usr/share/openclash/openclash_core.sh 'Meta' >/dev/null 2>&1 &")
-		uci:set("openclash", "config", "github_address_mod", "0")
-		uci:commit("openclash")
+	local cdn_url = luci.http.formvalue("url")
+	if cdn_url then
+		luci.sys.call(string.format("rm -rf /tmp/clash_last_version 2>/dev/null && bash /usr/share/openclash/clash_version.sh '%s' >/dev/null 2>&1", cdn_url))
+		luci.sys.call(string.format("bash /usr/share/openclash/openclash_core.sh 'Dev' '%s' >/dev/null 2>&1 &", cdn_url))
+		luci.sys.call(string.format("bash /usr/share/openclash/openclash_core.sh 'TUN' '%s' >/dev/null 2>&1 &", cdn_url))
+		luci.sys.call(string.format("bash /usr/share/openclash/openclash_core.sh 'Meta' '%s' >/dev/null 2>&1 &", cdn_url))
 	else
 		luci.sys.call("rm -rf /tmp/clash_last_version 2>/dev/null && bash /usr/share/openclash/clash_version.sh >/dev/null 2>&1")
 		luci.sys.call("bash /usr/share/openclash/openclash_core.sh 'Dev' >/dev/null 2>&1 &")
 		luci.sys.call("bash /usr/share/openclash/openclash_core.sh 'TUN' >/dev/null 2>&1 &")
 		luci.sys.call("bash /usr/share/openclash/openclash_core.sh 'Meta' >/dev/null 2>&1 &")
 	end
+
 end
 
 function download_rule()
@@ -410,7 +417,12 @@ function action_remove_all_core()
 end
 
 function action_one_key_update()
-  return luci.sys.call("rm -rf /tmp/*_last_version 2>/dev/null && bash /usr/share/openclash/openclash_update.sh 'one_key_update' >/dev/null 2>&1 &")
+	local cdn_url = luci.http.formvalue("url")
+	if cdn_url then
+		return luci.sys.call(string.format("rm -rf /tmp/*_last_version 2>/dev/null && bash /usr/share/openclash/openclash_update.sh 'one_key_update' '%s' >/dev/null 2>&1 &", cdn_url))
+	else
+		return luci.sys.call("rm -rf /tmp/*_last_version 2>/dev/null && bash /usr/share/openclash/openclash_update.sh 'one_key_update' >/dev/null 2>&1 &")
+	end
 end
 
 local function dler_login_info_save()
@@ -1416,8 +1428,8 @@ function action_backup()
 	local reader = ltn12_popen("tar -C '/etc/openclash/' -cz . 2>/dev/null")
 
 	luci.http.header(
-		'Content-Disposition', 'attachment; filename="Backup-OpenClash-%s.tar.gz"' %{
-			os.date("%Y-%m-%d-%H-%M-%S")
+		'Content-Disposition', 'attachment; filename="Backup-OpenClash-%s-%s-%s.tar.gz"' %{
+			device_name, device_arh, os.date("%Y-%m-%d-%H-%M-%S")
 		})
 
 	luci.http.prepare_content("application/x-targz")
@@ -1430,8 +1442,8 @@ function action_backup_ex_core()
 	local reader = ltn12_popen("echo 'core' > /tmp/oc_exclude.txt && tar -C '/etc/openclash/' -X '/tmp/oc_exclude.txt' -cz . 2>/dev/null")
 
 	luci.http.header(
-		'Content-Disposition', 'attachment; filename="Backup-OpenClash-Exclude-Cores-%s.tar.gz"' %{
-			os.date("%Y-%m-%d-%H-%M-%S")
+		'Content-Disposition', 'attachment; filename="Backup-OpenClash-Exclude-Cores-%s-%s-%s.tar.gz"' %{
+			device_name, device_arh, os.date("%Y-%m-%d-%H-%M-%S")
 		})
 
 	luci.http.prepare_content("application/x-targz")
@@ -1443,8 +1455,8 @@ function action_backup_only_config()
 	local reader = ltn12_popen("tar -C '/etc/openclash' -cz './config' 2>/dev/null")
 
 	luci.http.header(
-		'Content-Disposition', 'attachment; filename="Backup-OpenClash-Config-%s.tar.gz"' %{
-			os.date("%Y-%m-%d-%H-%M-%S")
+		'Content-Disposition', 'attachment; filename="Backup-OpenClash-Config-%s-%s-%s.tar.gz"' %{
+			device_name, device_arh, os.date("%Y-%m-%d-%H-%M-%S")
 		})
 
 	luci.http.prepare_content("application/x-targz")
@@ -1455,8 +1467,8 @@ function action_backup_only_core()
 	local reader = ltn12_popen("tar -C '/etc/openclash' -cz './core' 2>/dev/null")
 
 	luci.http.header(
-		'Content-Disposition', 'attachment; filename="Backup-OpenClash-Cores-%s.tar.gz"' %{
-			os.date("%Y-%m-%d-%H-%M-%S")
+		'Content-Disposition', 'attachment; filename="Backup-OpenClash-Cores-%s-%s-%s.tar.gz"' %{
+			device_name, device_arh, os.date("%Y-%m-%d-%H-%M-%S")
 		})
 
 	luci.http.prepare_content("application/x-targz")
@@ -1467,8 +1479,8 @@ function action_backup_only_rule()
 	local reader = ltn12_popen("tar -C '/etc/openclash' -cz './rule_provider' 2>/dev/null")
 
 	luci.http.header(
-		'Content-Disposition', 'attachment; filename="Backup-OpenClash-Only-Rule-Provider-%s.tar.gz"' %{
-			os.date("%Y-%m-%d-%H-%M-%S")
+		'Content-Disposition', 'attachment; filename="Backup-OpenClash-Only-Rule-Provider-%s-%s-%s.tar.gz"' %{
+			device_name, device_arh, os.date("%Y-%m-%d-%H-%M-%S")
 		})
 
 	luci.http.prepare_content("application/x-targz")
@@ -1479,8 +1491,8 @@ function action_backup_only_proxy()
 	local reader = ltn12_popen("tar -C '/etc/openclash' -cz './proxy_provider' 2>/dev/null")
 
 	luci.http.header(
-		'Content-Disposition', 'attachment; filename="Backup-OpenClash-Proxy-Provider-%s.tar.gz"' %{
-			os.date("%Y-%m-%d-%H-%M-%S")
+		'Content-Disposition', 'attachment; filename="Backup-OpenClash-Proxy-Provider-%s-%s-%s.tar.gz"' %{
+			device_name, device_arh, os.date("%Y-%m-%d-%H-%M-%S")
 		})
 
 	luci.http.prepare_content("application/x-targz")
