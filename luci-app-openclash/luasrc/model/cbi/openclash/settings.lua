@@ -38,7 +38,8 @@ m.description = translate("Note: To restore the default configuration, try acces
 "<br/>"..font_green..translate("Note: Game proxy please use nodes except VMess")..font_off..
 "<br/>"..font_green..translate("Note: If you need to perform client access control in Fake-IP mode, please change the DNS hijacking mode to firewall forwarding")..font_off..
 "<br/>"..translate("Note: The default proxy routes local traffic, BT, PT download, etc., please use Redir-Host mode as much as possible and pay attention to traffic avoidance")..
-"<br/>"..translate("Note: If the connection is abnormal, please follow the steps on this page to check first")..": ".."<a href='javascript:void(0)' onclick='javascript:return winOpen(\"https://github.com/vernesong/OpenClash/wiki/%E7%BD%91%E7%BB%9C%E8%BF%9E%E6%8E%A5%E5%BC%82%E5%B8%B8%E6%97%B6%E6%8E%92%E6%9F%A5%E5%8E%9F%E5%9B%A0\")'>"..translate("Click to the page").."</a>"
+"<br/>"..translate("Note: If the connection is abnormal, please follow the steps on this page to check first")..": ".."<a href='javascript:void(0)' onclick='javascript:return winOpen(\"https://github.com/vernesong/OpenClash/wiki/%E7%BD%91%E7%BB%9C%E8%BF%9E%E6%8E%A5%E5%BC%82%E5%B8%B8%E6%97%B6%E6%8E%92%E6%9F%A5%E5%8E%9F%E5%9B%A0\")'>"..translate("Click to the page").."</a>"..
+"<br/>"..font_green..translate("For More Useful Meta Core Functions Go Wiki")..": "..font_off.."<a href='javascript:void(0)' onclick='javascript:return winOpen(\"https://wiki.metacubex.one/\")'>"..translate("https://wiki.metacubex.one/").."</a>"
 
 s = m:section(TypedSection, "openclash")
 s.anonymous = true
@@ -58,10 +59,6 @@ s:tab("version_update", translate("Version Update"))
 s:tab("developer", translate("Developer Settings"))
 s:tab("debug", translate("Debug Logs"))
 s:tab("dlercloud", translate("Dler Cloud"))
-
-o = s:taboption("op_mode", Flag, "enable_meta_core", font_red..bold_on..translate("Enable Meta Core")..bold_off..font_off)
-o.description = font_red..bold_on..translate("Some Premium Core Features are Unavailable, For Other More Useful Functions Go Wiki:")..bold_off..font_off.." ".."<a href='javascript:void(0)' onclick='javascript:return winOpen(\"https://wiki.metacubex.one/\")'>https://wiki.metacubex.one/</a>"
-o.default = 0
 
 o = s:taboption("op_mode", ListValue, "en_mode", font_red..bold_on..translate("Select Mode")..bold_off..font_off)
 o.description = translate("Select Mode For OpenClash Work, Try Flush DNS Cache If Network Error")
@@ -99,7 +96,6 @@ o.description = translate("Select Proxy Mode")
 o:value("rule", translate("Rule Proxy Mode"))
 o:value("global", translate("Global Proxy Mode"))
 o:value("direct", translate("Direct Proxy Mode"))
-o:value("script", translate("Script Proxy Mode (Tun Core Only)"))
 o.default = "rule"
 
 o = s:taboption("op_mode", Value, "delay_start", translate("Delay Start (s)"))
@@ -244,7 +240,7 @@ o.description = translate("Only Supported for Rule Mode")..", "..font_red..bold_
 o.default = 1
 
 o = s:taboption("traffic_control", Flag, "disable_udp_quic", font_red..bold_on..translate("Disable QUIC")..bold_off..font_off)
-o.description = translate("Prevent YouTube and Others To Use QUIC Transmission")..", "..font_red..bold_on..translate("REJECT UDP Traffic(Not Include CN) On Port 443")..bold_off..font_off
+o.description = translate("Prevent YouTube and Others To Use QUIC Transmission")..", "..font_red..bold_on..translate("REJECT UDP Traffic(Not Include bypassed regions_Default:CN) On Port 443")..bold_off..font_off
 o.default = 1
 
 o = s:taboption("traffic_control", Flag, "skip_proxy_address", translate("Skip Proxy Address"))
@@ -262,13 +258,19 @@ o:depends("en_mode", "redir-host-tun")
 o:depends("en_mode", "redir-host-mix")
 
 if op_mode == "redir-host" then
-	o = s:taboption("traffic_control", Flag, "china_ip_route", translate("China IP Route"))
-	o.description = translate("Bypass The China Network Flows, Improve Performance")
+	o = s:taboption("traffic_control", ListValue, "china_ip_route", translate("China IP Route"))
+	o.description = translate("Bypass Specified Regions Network Flows, Improve Performance")
 	o.default = 0
+	o:value("0", translate("Disable"))
+	o:value("1", translate("Bypass Mainland China"))
+	o:value("2", translate("Bypass Overseas"))
 else
-	o = s:taboption("traffic_control", Flag, "china_ip_route", translate("China IP Route"))
-	o.description = translate("Bypass The China Network Flows, Improve Performance, If Inaccessibility on Bypass Gateway, Try to Enable Bypass Gateway Compatible Option, Depend on Dnsmasq")
+	o = s:taboption("traffic_control", ListValue, "china_ip_route", translate("China IP Route"))
+	o.description = translate("Bypass Specified Regions Network Flows, Improve Performance, If Inaccessibility on Bypass Gateway, Try to Enable Bypass Gateway Compatible Option, Depend on Dnsmasq")
 	o.default = 0
+	o:value("0", translate("Disable"))
+	o:value("1", translate("Bypass Mainland China"))
+	o:value("2", translate("Bypass Overseas"))
 	o:depends("enable_redirect_dns", "1")
 	o:depends("enable_redirect_dns", "0")
 
@@ -277,6 +279,7 @@ else
 	o.default = "114.114.114.114"
 	o.placeholder = translate("114.114.114.114 or 127.0.0.1#5300")
 	o:depends("china_ip_route", "1")
+	o:depends("china_ip_route", "2")
 end
 
 o = s:taboption("traffic_control", Flag, "intranet_allowed", translate("Only intranet allowed"))
@@ -1178,9 +1181,12 @@ o = s:taboption("ipv6", Flag, "ipv6_dns", translate("IPv6 DNS Resolve"))
 o.description = translate("Enable to Resolve IPv6 DNS Requests")
 o.default = 0
 
-o = s:taboption("ipv6", Flag, "china_ip6_route", translate("China IPv6 Route"))
-o.description = translate("Bypass The China Network Flows, Improve Performance")
+o = s:taboption("ipv6", ListValue, "china_ip6_route", translate("China IPv6 Route"))
+o.description = translate("Bypass Specified Regions Network Flows, Improve Performance")
 o.default = 0
+o:value("0", translate("Disable"))
+o:value("1", translate("Bypass Mainland China"))
+o:value("2", translate("Bypass Overseas"))
 o:depends("ipv6_enable", "1")
 
 o = s:taboption("ipv6", Value, "local_network6_pass", translate("Local IPv6 Network Bypassed List"))

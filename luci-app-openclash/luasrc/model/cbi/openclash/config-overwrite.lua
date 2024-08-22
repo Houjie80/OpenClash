@@ -18,6 +18,7 @@ bold_off = [[</strong>]]
 local op_mode = string.sub(luci.sys.exec('uci get openclash.config.operation_mode 2>/dev/null'),0,-2)
 if not op_mode then op_mode = "redir-host" end
 local lan_int_name = uci:get("openclash", "config", "lan_interface_name") or "0"
+
 local lan_ip
 if lan_int_name == "0" then
 	lan_ip = SYS.exec("uci -q get network.lan.ipaddr |awk -F '/' '{print $1}' 2>/dev/null |tr -d '\n'")
@@ -572,10 +573,6 @@ o = ss:option(DummyValue, "rule_name", translate("Other Rules Name"))
 function o.cfgvalue(...)
 	if Value.cfgvalue(...) == "lhie1" then
 		return translate("lhie1 Rules")
-	elseif Value.cfgvalue(...) == "ConnersHua" then
-		return translate("ConnersHua(Provider-type) Rules")
-	elseif Value.cfgvalue(...) == "ConnersHua_return" then
-		return translate("ConnersHua Return Rules")
 	else
 		return translate("None")
 	end
