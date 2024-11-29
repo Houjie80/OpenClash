@@ -1,38 +1,8 @@
 <head>
 <style>
-.arrow-down{
-	display:inline-block;
-	width:0px;
-	height:0px;
-	border-style:solid;
-	border-width:10px;
-	border-color: rgb(65 122 180) transparent transparent transparent;
-}
-
-.radio-button{
-	display: none;
-	white-space: nowrap;
-	background-color: #d1d1d1;
-	border-radius: 4px;
-}
-
-.radio-button input[type="radio"] {
-	display: none;
-}
-   
-.radio-button label {
-	display: inline-block;
-	font-size: 14px;
-	padding: 4px 5px;
-	color: white;
-	cursor: pointer;
-	border-radius: 4px;
-}
-
-.radio-button input[type="radio"]:checked+label {
-	background-color: #1080c1;
-}
+.arrow-down{cursor:pointer;display:inline-block;width:0;height:0;border-style:solid;border-width:10px;border-color:#417ab4 #fff0 #fff0 #fff0}.radio-button{display:none;white-space:nowrap;background-color:#547185;border-radius:4px}.radio-button input[type="radio"]{display:none}.radio-button label{display:inline-block;font-size:12px;padding:2px 3px;color:#fff;cursor:pointer;border-radius:4px}.radio-button input[type="radio"]:checked+label{background-color:#006786}
 </style>
+<style>#flag{display:flex;justify-content:center;align-items:center;height:150px}#flag img{max-width:100%;max-height:100%;width:auto;height:auto}</style>
 </head>
 <%
 	local uci = require("luci.model.uci").cursor()
@@ -44,11 +14,28 @@
 	    <tr>
 	  	<td colspan="4" width="100%">
 	  		<p style="margin: 10px 0; text-align: center">
-				<img id="_logo" src="/luci-static/resources/openclash/img/logo.png?<%=random%>" loading="lazy" width="150px" height="150px" onload="return logo_check(this,this.src,'https://raw.githubusercontent.com/vernesong/OpenClash/<%=RELEASE_BRANCH%>/img/meta.png')" onerror="return logo_error(this,'/luci-static/resources/openclash/img/logo.png?<%=random%>')" title="Hello, World!" alt="OpenClash" onclick="return homepage()" />
+				<%
+					if uci:get("openclash", "config", "enable_meta_core") ~= '1' then
+				%>
+                    <div id="flag"></div>
+                    <div id="image-container">
+                        <div id="ip-country" style="display: none;"></div>
+                        <div id="ip-info" style="display: none;"></div>
+                        <div id="current-version" style="display: none;"></div>
+                    </div>
+				<%
+					else
+				%>
+                    <div id="flag"></div>
+                    <div id="image-container">
+                        <div id="ip-country" style="display: none;"></div>
+                        <div id="ip-info" style="display: none;"></div>
+                        <div id="current-version" style="display: none;"></div>
+                    </div>
+				<%
+					end
+				%>
 			</p>
-	  		<p id="_clashversion" style="margin: 10px 0; text-align: center">
-				<img src="/luci-static/resources/openclash/img/version.svg?<%=random%>" alt="currentversion" height="21px" onclick="return go_update()">
-	  		</p>
 	    </td></tr>
 	    <tr><td colspan="4" width="100%">
      		<p style="margin: 10px 0; text-align: center">
@@ -235,7 +222,6 @@
 	var luci_protocol;
 	var ws_t;
 	var ws_c;
-	var ws_m;
 	var state_refresh;
 	var s;
 	var gr;
@@ -250,9 +236,9 @@
 			clash.innerHTML = status.clash ? '<b style=color:green>' + status.core_type +'&nbsp;&nbsp;&nbsp;<%:Running%></b>' : '<b style=color:red><%:Not Running%></b>';
 			watchdog.innerHTML = status.watchdog ? '&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<%:Daemons%>:&nbsp;&nbsp;&nbsp;<b style=color:green><%:Running%></b>' : '&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<%:Daemons%>:&nbsp;&nbsp;&nbsp;<b style=color:red><%:Not Running%></b>';
 			dase.innerHTML = status.dase ? "<b style=color:green>"+status.dase+"</b>" : "<b style=color:red>"+"<%:Not Set%>"+"</b>";
-			web.innerHTML = status.web ? '<input type="button" class="btn cbi-button cbi-button-reload" value="<%:Yacd Control Panel%>" onclick="return ycad_dashboard(this)"/>' : '<b style=color:red><%:Not Running%></b>';
-			webo.innerHTML = status.web ? '<input type="button" class="btn cbi-button cbi-button-reload" value="<%:Dashboard Control Panel%>" onclick="return net_dashboard(this)"/>' : '<b style=color:red><%:Not Running%></b>';
-			webm.innerHTML = status.web ? '<input type="button" class="btn cbi-button cbi-button-reload" value="<%:Metacubexd Control Panel%>" onclick="return meta_dashboard(this)"/>' : '<b style=color:red><%:Not Running%></b>';
+			web.innerHTML = status.web ? '<input type="button" class="btn cbi-button cbi-button-reload" value="<%:YACD PANEL%>" onclick="return ycad_dashboard(this)"/>' : '<b style=color:red><%:Not Running%></b>';
+			webo.innerHTML = status.web ? '<input type="button" class="btn cbi-button cbi-button-reload" value="<%:DASHBOARD%>" onclick="return net_dashboard(this)"/>' : '<b style=color:red><%:Not Running%></b>';
+			webm.innerHTML = status.web ? '<input type="button" class="btn cbi-button cbi-button-reload" value="<%:METACUBEXD%>" onclick="return meta_dashboard(this)"/>' : '<b style=color:red><%:Not Running%></b>';
 			close_all_connection.innerHTML = status.clash ? '<input type="button" class="btn cbi-button cbi-button-reload" value="<%:Close All Connections%>" onclick="return b_close_all_connection(this)"/>' : '<b style=color:red><%:Not Running%></b>';
 			reload_firewall.innerHTML = status.clash ? '<input type="button" class="btn cbi-button cbi-button-reload" value="<%:Reload Firewall Rules%>" onclick="return b_reload_firewall(this)"/>' : '<b style=color:red><%:Not Running%></b>';
 			flush_fakeip_cache.innerHTML = status.clash ? '<input type="button" class="btn cbi-button cbi-button-reload" value="<%:Flush Fake-IP Cache%>" onclick="return b_flush_fakeip_cache(this)"/>' : '<b style=color:red><%:Not Running%></b>';
@@ -296,15 +282,10 @@
 			};
 			
 			function ws_open() {
-				if (ws_t) {ws_t.close();}
-				if (ws_c) {ws_c.close();}
-				if (ws_m) {ws_m.close();}
 				ws_t = new WebSocket(luci_protocol+"/traffic?token="+status.dase);
 				ws_c = new WebSocket(luci_protocol+"/connections?token="+status.dase);
-				ws_m = new WebSocket(luci_protocol+"/memory?token="+status.dase);
 				ws_t.onmessage = ws_tmessage;
 				ws_c.onmessage = ws_cmessage;
-				ws_m.onmessage = ws_mmessage;
 				ws_t.onerror = ws_terror;
 				ws_t.onopen = function (event) {
 					ws_connect = true;
@@ -618,6 +599,7 @@
 	function show_sys() {
 		XHR.get('<%=luci.dispatcher.build_url("admin", "services", "openclash", "toolbar_show_sys")%>', null, function(x, status) {
 			if (x && x.status == 200 && x.responseText != "") {
+				document.getElementById("mem_t").innerHTML = "<font style=\"color:green\">"+status.mem+"</font>";
 				if (status.cpu <= 50) {
 					document.getElementById("cpu_t").innerHTML = "<font style=\"color:green\">"+status.cpu+" %</font>";
 				}
@@ -632,6 +614,7 @@
 				}
 			}
 			else {
+				document.getElementById("mem_t").innerHTML = "<font style=\"color:green\">0 KB</font>";
 				document.getElementById("cpu_t").innerHTML = "<font style=\"color:green\">0 %</font>";
 			}
 		});
@@ -672,16 +655,6 @@
 		}
 		else {
 			document.getElementById("connect_t").innerHTML = "<font style=\"color:green\">0</font>";
-		}
-	};
-
-	function ws_mmessage(event) {
-		var data = JSON.parse(event.data)
-		if (data.inuse) {
-			document.getElementById("mem_t").innerHTML = "<font style=\"color:green\">"+bytesToSize(data.inuse)+"</font>";
-		}
-		else {
-			document.getElementById("mem_t").innerHTML = "<font style=\"color:green\">0 KB</font>";
 		}
 		show_sys();
 	};
@@ -855,7 +828,7 @@
     {
         XHR.get('<%=luci.dispatcher.build_url("admin", "services", "openclash", "status")%>', null, function(x, status) {
         btn.disabled = true;
-        btn.value    = '<%:Metacubexd Control Panel%>';
+        btn.value    = '<%:METACUBEXD%>';
         if (status.daip && window.location.hostname == status.daip) {
             url9='<%="http://'+window.location.hostname+':'+status.cn_port+'/ui/metacubexd/#/setup?hostname='+ window.location.hostname + '&port=' + status.cn_port + '&secret=' + status.dase +'"%>';
         }
@@ -875,7 +848,7 @@
     {
         XHR.get('<%=luci.dispatcher.build_url("admin", "services", "openclash", "status")%>', null, function(x, status) {
         btn.disabled = true;
-        btn.value    = '<%:Yacd Control Panel%>';
+        btn.value    = '<%:YACD PANEL%>';
         if (status.daip && window.location.hostname == status.daip) {
             url1='<%="http://'+window.location.hostname+':'+status.cn_port+'/ui/yacd/?hostname='+ window.location.hostname + '&port=' + status.cn_port + '&secret=' + status.dase +'"%>';
         }
@@ -895,7 +868,7 @@
     {
         XHR.get('<%=luci.dispatcher.build_url("admin", "services", "openclash", "status")%>', null, function(x, status) {
         btn.disabled = true;
-        btn.value    = '<%:Dashboard Control Panel%>';
+        btn.value    = '<%:DASHBOARD%>';
         if (status.daip && window.location.hostname == status.daip) {
             url2='<%="http://'+window.location.hostname+':'+status.cn_port+'/ui/dashboard/#/?host='+ window.location.hostname + '&port=' + status.cn_port + '&secret=' + status.dase +'"%>';
         }
@@ -1008,3 +981,76 @@
 	};
 //]]></script>
 
+<script>
+    fetch('http://ip-api.com/json')
+        .then(response => response.json())
+        .then(data => {
+            const countryCode = data.countryCode.toLowerCase();
+            const dataOrg = data.as.replace(/AS\d+\s*/, "").trim();
+            const flagImage = `https://flagcdn.com/128x96/${countryCode}.png`;
+
+            document.getElementById('flag').innerHTML = `
+                <center>
+                    <a target="_blank" href="https://flagcdn.com/160x120/${countryCode}.png">
+                        <img src="${flagImage}" alt="flag ${data.country_name}">
+                    </a>
+                </center>
+                <br/>
+            `;
+
+            document.getElementById('ip-info').innerHTML = `
+                <center>
+                    <a target="_blank" href="http://ip-api.com/json">
+                        <img src="https://img.shields.io/badge/${data.query}-${dataOrg}-orange" alt="ip">
+                    </a>
+                </center>
+            `;
+
+            document.getElementById('ip-country').innerHTML = `
+                <center>
+                    <a target="_blank" href="http://ip-api.com/json">
+                        <img src="https://img.shields.io/badge/${data.country}-${data.regionName}-ligthgreen" alt="ip">
+                    </a>
+                </center>
+            `;
+
+            document.getElementById('current-version').innerHTML = `
+                <center>
+                    <a target="_blank" href="https://github.com/vernesong/OpenClash">
+                        <img src="/luci-static/resources/openclash/img/version.svg" alt="oc">
+                    </a>
+                </center>
+            `;
+
+            toggleImages();
+        })
+        .catch(error => {
+            console.error('Terjadi kesalahan:', error);
+        });
+
+    function toggleImages() {
+        let currentIndex = 0;
+        const images = document.querySelectorAll('#image-container > div');
+
+        images[currentIndex].style.display = 'block';
+
+        setInterval(() => {
+            images[currentIndex].style.display = 'none';
+            currentIndex = (currentIndex + 1) % images.length;
+            images[currentIndex].style.display = 'block';
+        }, 5000);
+    }
+</script>
+<script>
+    function checkFlag() {
+        var flag = document.getElementById('flag');
+        
+        if (!flag.hasChildNodes()) {
+            var defaultImage = document.createElement('img');
+            defaultImage.src = '/luci-static/resources/openclash/img/logo.png';
+            defaultImage.alt = 'Default Image';
+            flag.appendChild(defaultImage);
+        }
+    }
+    window.onload = checkFlag;
+</script>
