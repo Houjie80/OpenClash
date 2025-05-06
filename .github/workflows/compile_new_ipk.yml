@@ -100,12 +100,23 @@ jobs:
           cd tmp/SDK
           make package/luci-app-openclash/compile V=99
       
-      - name: Compile OpenClash APK
+      - name: Download temporary artifact
+        uses: actions/download-artifact@v4
+
+      - name: Moving artifact to releases
+        shell: bash
         run: |
-          cd ..
-          cd tmp/SNAPSDK
-          make defconfig
-          make package/luci-app-openclash/compile V=99
+          mkdir ./release
+          cp "./tmp/SDK/bin/ar71xx/packages/base/luci-app-openclash_${{ needs.Get-Version.outputs.version }}_all.ipk" "./release/luci-app-openclash_${{ needs.Get-Version.outputs.version }}_all.ipk"
+          
+      - name: Upload release asset
+        uses: svenstaro/upload-release-action@v2
+        with:
+          prerelease: false
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ./release/*
+          overwrite: true
+          tag: v${{ needs.Get-Ver
 
       - name: Switch OpenClash Repository to Package
         uses: actions/checkout@v4
@@ -119,7 +130,6 @@ jobs:
           echo "https://img.shields.io/badge/New Release-v${{ needs.Get-Version.outputs.version }}-orange.svg" >> ./${{ github.ref_name }}/version
           cd ..
           cp "./tmp/SDK/bin/ar71xx/packages/base/luci-app-openclash_${{ needs.Get-Version.outputs.version }}_all.ipk" "./OpenClash/${{ github.ref_name }}/luci-app-openclash_${{ needs.Get-Version.outputs.version }}_all.ipk"
-          cp "./tmp/SNAPSDK/bin/packages/x86_64/base/luci-app-openclash-${{ needs.Get-Version.outputs.version }}.apk" "./OpenClash/${{ github.ref_name }}/luci-app-openclash-${{ needs.Get-Version.outputs.version }}.apk"
           sed -i -E "s/OpenClash\/tree\/v(.*)/OpenClash\/tree\/v${{ needs.Get-Version.outputs.version }}/g" ./OpenClash/${{ github.ref_name }}/README.md
           sed -i -E "s/OpenClash\/releases\/tag\/v(.*)/OpenClash\/releases\/tag\/v${{ needs.Get-Version.outputs.version }}/g" ./OpenClash/${{ github.ref_name }}/README.md
           sed -i -E "s/source code-v(.*)-green/source code-v${{ needs.Get-Version.outputs.version }}-green/g" ./OpenClash/${{ github.ref_name }}/README.md
