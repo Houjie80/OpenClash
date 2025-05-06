@@ -4,7 +4,7 @@ name: Compile The New Version OpenClash
 on: 
   push:
     branches:
-      - dev
+      - master
     paths:
       - 'luci-app-openclash/Makefile'
   workflow_dispatch:
@@ -119,6 +119,7 @@ jobs:
           echo "https://img.shields.io/badge/New Release-v${{ needs.Get-Version.outputs.version }}-orange.svg" >> ./${{ github.ref_name }}/version
           cd ..
           cp "./tmp/SDK/bin/ar71xx/packages/base/luci-app-openclash_${{ needs.Get-Version.outputs.version }}_all.ipk" "./OpenClash/${{ github.ref_name }}/luci-app-openclash_${{ needs.Get-Version.outputs.version }}_all.ipk"
+          cp "./tmp/SDK/bin/ar71xx/packages/base/luci-app-openclash_${{ needs.Get-Version.outputs.version }}_all.ipk" " ./release/luci-app-openclash_${{ needs.Get-Version.outputs.version }}_all.ipk"
           cp "./tmp/SNAPSDK/bin/packages/x86_64/base/luci-app-openclash-${{ needs.Get-Version.outputs.version }}.apk" "./OpenClash/${{ github.ref_name }}/luci-app-openclash-${{ needs.Get-Version.outputs.version }}.apk"
           sed -i -E "s/OpenClash\/tree\/v(.*)/OpenClash\/tree\/v${{ needs.Get-Version.outputs.version }}/g" ./OpenClash/${{ github.ref_name }}/README.md
           sed -i -E "s/OpenClash\/releases\/tag\/v(.*)/OpenClash\/releases\/tag\/v${{ needs.Get-Version.outputs.version }}/g" ./OpenClash/${{ github.ref_name }}/README.md
