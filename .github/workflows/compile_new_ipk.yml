@@ -107,13 +107,6 @@ jobs:
           make defconfig
           make package/luci-app-openclash/compile V=99
 
-  push_packages:
-      needs: Compile
-      name: Push Packages to Release
-      permissions:
-        contents: write  # To push a branch
-      runs-on: ubuntu-latest
-      steps:
       - name: Download temporary artifact
         uses: actions/download-artifact@v4
 
