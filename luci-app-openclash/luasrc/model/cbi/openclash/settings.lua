@@ -19,15 +19,7 @@ if not op_mode then op_mode = "redir-host" end
 local lan_ip = fs.lanip()
 m = Map("openclash", translate("Plugin Settings"))
 m.pageaction = false
-m.description = translate("Note: To restore the default configuration, try accessing:").." <a href='javascript:void(0)' onclick='javascript:restore_config(this)'>http://"..lan_ip.."/cgi-bin/luci/admin/services/openclash/restore</a>"..
-"<br/>"..translate("Note: It is not recommended to enable IPv6 and related services for routing. Most of the network connection problems reported so far are related to it")..
-"<br/>"..font_green..translate("Note: Turning on secure DNS in the browser will cause abnormal shunting, please be careful to turn it off")..font_off..
-"<br/>"..font_green..translate("Note: Some software will modify the device HOSTS, which will cause abnormal shunt, please pay attention to check")..font_off..
-"<br/>"..font_green..translate("Note: Game proxy please use nodes except VMess")..font_off..
-"<br/>"..font_green..translate("Note: If you need to perform client access control in Fake-IP mode, please change the DNS hijacking mode to firewall forwarding")..font_off..
-"<br/>"..translate("Note: The default proxy routes local traffic, BT, PT download, etc., please use Redir-Host mode as much as possible and pay attention to traffic avoidance")..
-"<br/>"..translate("Note: If the connection is abnormal, please follow the steps on this page to check first")..": ".."<a href='javascript:void(0)' onclick='javascript:return winOpen(\"https://github.com/vernesong/OpenClash/wiki/%E7%BD%91%E7%BB%9C%E8%BF%9E%E6%8E%A5%E5%BC%82%E5%B8%B8%E6%97%B6%E6%8E%92%E6%9F%A5%E5%8E%9F%E5%9B%A0\")'>"..translate("Click to the page").."</a>"..
-"<br/>"..font_green..translate("For More Useful Meta Core Functions Go Wiki")..": "..font_off.."<a href='javascript:void(0)' onclick='javascript:return winOpen(\"https://wiki.metacubex.one/\")'>"..translate("https://wiki.metacubex.one/").."</a>"
+m.description = translate("")
 
 s = m:section(TypedSection, "openclash")
 s.anonymous = true
@@ -101,6 +93,10 @@ o.default = 0
 
 o = s:taboption("op_mode", Flag, "disable_quic_go_gso", translate("Disable quic-go GSO Support"))
 o.description = font_red..bold_on..translate("Suggestion: If Encountering Issues With QUIC UDP on The Linux Kernel Version Above 6.6, Please Try to Enable.")..bold_off..font_off
+o.default = 0
+
+o = s:taboption("op_mode", Flag, "skip_safe_path_check", translate("Skip Safe Path Check"))
+o.description = font_red..bold_on..translate("Enable If You Want Using Files Not in /etc/openclash in You Config")..bold_off..font_off
 o.default = 0
 
 o = s:taboption("op_mode", Flag, "small_flash_memory", translate("Small Flash Memory"))
@@ -790,8 +786,7 @@ o.description = translate("Custom GeoIP MMDB URL, Click Button Below To Refresh 
 o:value("https://testingcf.jsdelivr.net/gh/alecthw/mmdb_china_ip_list@release/lite/Country.mmdb", translate("Alecthw-lite-Version")..translate("(Default mmdb)"))
 o:value("https://testingcf.jsdelivr.net/gh/alecthw/mmdb_china_ip_list@release/Country.mmdb", translate("Alecthw-Version")..translate("(All Info mmdb)"))
 o:value("https://testingcf.jsdelivr.net/gh/Hackl0us/GeoIP2-CN@release/Country.mmdb", translate("Hackl0us-Version")..translate("(Only CN)"))
-o:value("https://geolite.clash.dev/Country.mmdb", translate("Geolite.clash.dev"))
-o.default = "http://www.ideame.top/mmdb/Country.mmdb"
+o.default = "https://testingcf.jsdelivr.net/gh/alecthw/mmdb_china_ip_list@release/lite/Country.mmdb"
 
 o = s:taboption("geo_update", Button, translate("GEOIP Update")) 
 o.title = translate("Update GeoIP MMDB")
@@ -903,14 +898,14 @@ o:value("5", translate("Every Friday"))
 o:value("6", translate("Every Saturday"))
 o:value("0", translate("Every Sunday"))
 o.default = "1"
-o:depends("geosite_auto_update", "1")
+o:depends("geoasn_auto_update", "1")
 
 o = s:taboption("geo_update", ListValue, "geoasn_update_day_time", translate("Update time (every day)"))
 for t = 0,23 do
 o:value(t, t..":00")
 end
 o.default = "0"
-o:depends("geosite_auto_update", "1")
+o:depends("geoasn_auto_update", "1")
 
 o = s:taboption("geo_update", Value, "geoasn_custom_url")
 o.title = translate("Custom GeoSite URL")
@@ -960,8 +955,8 @@ o.rmempty = false
 o.description = translate("Custom Chnroute Lists URL, Click Button Below To Refresh After Edit")
 o:value("https://ispip.clang.cn/all_cn.txt", translate("Clang-CN")..translate("(Default)"))
 o:value("https://ispip.clang.cn/all_cn_cidr.txt", translate("Clang-CN-CIDR"))
-o:value("https://fastly.jsdelivr.net/gh/Hackl0us/GeoIP2-CN@release/CN-ip-cidr.txt", translate("Hackl0us-CN-CIDR-fastly-jsdelivr")..translate("(Large Size)"))
-o:value("https://testingcf.jsdelivr.net/gh/Hackl0us/GeoIP2-CN@release/CN-ip-cidr.txt", translate("Hackl0us-CN-CIDR-testingcf-jsdelivr")..translate("(Large Size)"))
+o:value("https://fastly.jsdelivr.net/gh/Hackl0us/GeoIP2-CN@release/CN-ip-cidr.txt", translate("Hackl0us-CN-CIDR-fastly-jsdelivr"))
+o:value("https://testingcf.jsdelivr.net/gh/Hackl0us/GeoIP2-CN@release/CN-ip-cidr.txt", translate("Hackl0us-CN-CIDR-testingcf-jsdelivr"))
 o.default = "https://ispip.clang.cn/all_cn.txt"
 
 o = s:taboption("chnr_update", Value, "chnr6_custom_url")

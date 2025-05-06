@@ -12,25 +12,131 @@
 .radio-button{
 	display: none;
 	white-space: nowrap;
-	background-color: #d1d1d1;
+	background-image: linear-gradient(to right, #06101f, #003c54, #006d69, #139b51, #afbe1a);
 	border-radius: 4px;
 }
-
+.text1 {
+      writing-mode:tb-rl;
+    -webkit-transform:rotate(-90deg);
+    -moz-transform:rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    -ms-transform:rotate(-90deg);
+    transform: rotate(180deg);
+    white-space:nowrap;
+    float:left;
+    }
 .radio-button input[type="radio"] {
 	display: none;
 }
-   
+.tulis {
+background: linear-gradient(
+    to right, 
+    #A6CE37, #ECE71C, #0FC6E6, #F95D44, #816271, #9F1958, #081B6A, #59D7EE);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 800px;
+  background-position: center 0%;
+  animation: rainbow_animation 6s ease-in-out infinite;
+    background-size: 400% 100%;
+    font-size: 10px;
+}
+@keyframes rainbow_animation {
+    0%,100% {
+        background-position: 0 0;
+    }
+
+    50% {
+        background-position: 100% 0;
+    }
+}
 .radio-button label {
 	display: inline-block;
-	font-size: 14px;
-	padding: 4px 5px;
-	color: white;
+	font-size: 11px;
+	padding: 2px 3px;
+	color: #fff;
 	cursor: pointer;
-	border-radius: 4px;
+	border-radius: 2px;
+	text-shadow: 2px 2px 4px black;
+	font-family: Arial, Helvetica, sans-serif;
 }
 
 .radio-button input[type="radio"]:checked+label {
-	background-color: #1080c1;
+	background-image: linear-gradient(to right bottom, #71413f, #764447, #7b474f, #804a58, #834e61, #8b556c, #925c78, #996484, #a67195, #b37ea7, #c08bb9, #cc99cc);
+	color: yellow;
+	font-weight: bold;
+	text-shadow: 2px 2px 3px black;
+	font-size: 10px;
+	font-family: "Times New Roman", Times, serif;
+}
+.r {
+	background-image: linear-gradient(to right bottom, #71413f, #764447, #7b474f, #804a58, #834e61, #8b556c, #925c78, #996484, #a67195, #b37ea7, #c08bb9, #cc99cc);
+	color: yellow;
+	font-weight: bold;
+	text-shadow: 2px 2px 3px black;
+	font-size: 10px;
+	font-family: "Times New Roman", Times, serif;
+}
+.blink_me {
+  animation: blinker 2s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+.status {
+clear:both;
+#padding:5px 5px 5px 5px;
+#margin-bottom:4px;
+#font-size: 19px;
+#background-color: black;
+border: 3px solid rgb(63,94,251);
+border-radius: 9px;
+#background-image: url('/luci-static/resources/openclash/img/backgroundfanspage.png');
+ #background-size: cover;
+  #background-repeat: no-repeat;
+}
+.status span{
+font-weight: bold;
+color:gold;
+font-size: 8px;
+margin-bottom: 5px;
+}
+table {
+#color: cyan;
+#background-image: url('/luci-static/resources/openclash/img/backgroundfanspage.png');
+  #background-size: cover;
+  #background-repeat: no-repeat;
+border: 3px solid #5DD6F3;
+#border-radius: 10px;
+}
+.lok{
+color:cyan;
+}
+.lok2{
+color:gold;
+}
+td{
+color:cyan;
+border: 2px solid #5DD6F3;
+#background-color: black;
+}
+tr{
+color:cyan;
+border: 2px solid #5DD6F3;
+#background-color: black;
+}
+.fstatus {
+clear:both;
+padding:5px 5px 5px 5px;
+#margin-bottom:4px;
+#font-size: 12px;
+border: 3px solid gold;
+border-radius: 5px;
+#background-color: black;
+font-family: "Times New Roman", Times, serif;
 }
 
 .announcement-banner {
@@ -80,26 +186,47 @@
 }
 
 </style>
+<style>#flag{display:flex;justify-content:center;align-items:center;height:150px}#flag img{max-width:100%;max-height:100%;width:auto;height:auto}</style>
+</head>	
 </head>
 <%
 	local uci = require("luci.model.uci").cursor()
 	local RELEASE_BRANCH = uci:get("openclash", "config", "release_branch")
 	local random = tostring(os.time()):reverse():sub(1, 9)
 %>
-<fieldset class="cbi-section">
-	<table width="100%">
+<fieldset class="status">
+							<legend class="fstatus" style="font-size:18px" align="center"><marquee scrollamount="3"><font color="cyan"><i>OPENCLASH REMOD BY HOUJIE<i></font></marquee></legend>
+	<table>
+	    <tr>
 	  	<td colspan="4" width="100%">
-			<div id="announcement-banner" class="announcement-banner">
+	  		<div id="announcement-banner" class="announcement-banner">
 				<div class="megaphone-container"></div>
 				<img id="megaphone" src="/luci-static/resources/openclash/img/megaphone-simple.svg?<%=random%>" loading="lazy" alt="megaphone" width="15px" height="15px">
 				<div id="announcement-content" class="announcement-content"></div>
 			</div>
 	  		<p style="margin: 10px 0; text-align: center">
-				<img id="_logo" src="/luci-static/resources/openclash/img/logo.png?<%=random%>" loading="lazy" width="150px" height="150px" onload="return logo_check(this,this.src,'https://raw.githubusercontent.com/vernesong/OpenClash/<%=RELEASE_BRANCH%>/img/meta.png')" onerror="return logo_error(this,'/luci-static/resources/openclash/img/logo.png?<%=random%>')" title="Hello, World!" alt="OpenClash" onclick="return homepage()" />
+				<%
+					if uci:get("openclash", "config", "enable_meta_core") ~= '1' then
+				%>
+                    <div id="flag"></div>
+                    <div id="image-container">
+                        <div id="ip-country" style="display: none;"></div>
+                        <div id="ip-info" style="display: none;"></div>
+                        <div id="current-version" style="display: none;"></div>
+                    </div>
+				<%
+					else
+				%>
+                    <div id="flag"></div>
+                    <div id="image-container">
+                        <div id="ip-country" style="display: none;"></div>
+                        <div id="ip-info" style="display: none;"></div>
+                        <div id="current-version" style="display: none;"></div>
+                    </div>
+				<%
+					end
+				%>
 			</p>
-	  		<p id="_clashversion" style="margin: 10px 0; text-align: center">
-				<img src="/luci-static/resources/openclash/img/version.svg?<%=random%>" alt="currentversion" height="21px" onclick="return go_update()">
-	  		</p>
 	    </td></tr>
 	    <tr><td colspan="4" width="100%">
      		<p style="margin: 10px 0; text-align: center">
@@ -122,7 +249,7 @@
 		<tr><td width="25%"><%:Main Program%></td><td  width="25%" align="left"><span id="_clash"><%:Collecting data...%></span><span id="_watchdog"></span></td><td width="25%"><%:Control Panel Login IP%></td><td width="25%" align="left" id="_daip"><%:Collecting data...%></td></tr>
 		<tr><td width="20%"><%:Running Mode%></td><td  width="30%" align="left"><span id="_mode"><%:Collecting data...%></span><span id="radio-ru-mode" class="radio-button">
 				<input type="radio" id="normal" name="radios-ru" value="" checked onclick="return switch_run_mode(this.value)"/>
-				<label for="normal" id="run_normal"><%:Compat%></label>
+				<label for="normal" id="run_normal"><%:Compatible%></label>
 				<input type="radio" id="tun" name="radios-ru" value="-tun" onclick="return switch_run_mode(this.value)"/>
 				<label for="tun"><%:TUN%></label>
 				<input type="radio" id="mix" name="radios-ru" value="-mix" onclick="return switch_run_mode(this.value)"/>
@@ -136,7 +263,23 @@
 				<input type="radio" id="direct" name="radios" value="direct" onclick="return switch_rule_mode(this.value)"/>
 				<label for="direct"><%:Direct%></label>
 				</span></td><td width="25%"><%:Control Panel Login Secret%></td><td width="25%" align="left" id="_dase"><%:Collecting data...%></td></tr>
-		<tr><td colspan="4"><div style="margin: 10px 0; text-align: center"><span id="_web" style="width: 25%; display: inline-block;"></span><span id="_webm" style="width: 25%; display: inline-block;"><%:Collecting data...%></span><span id="_webz" style="width: 25%; display: inline-block;"><%:Collecting data...%></span><span id="_webo" style="width: 25%; display: inline-block;"></span></div></td></tr>
+		<tr><td width="100%" style=color:cyan>
+	  	   <span align="center" id="_webz">
+	  		   <%:Collecting data...%>
+	  	   </span></td>
+	  	   <td width="100%" style=color:cyan>
+	  	   <span align="center" id="_webm">
+	  		   <%:Collecting data...%>
+	  	   </span></td>
+	  	   <td width="100%" style=color:cyan>
+	  	   <span align="center" id="_webo">
+	  		   <%:Collecting data...%>
+	  	   </span>
+	  	   	<td width="100%" style=color:cyan>
+	  	   <span align="center" id="_web">
+	  		   <%:Collecting data...%>
+	  	   </span>
+	    </td></tr>
 		<tr id="tool_label2"><td colspan="4">
 			<div style="margin: 10px 0; text-align: center">
 <span>
@@ -302,10 +445,10 @@
 			clash.innerHTML = status.clash ? '<b style=color:green>' + status.core_type +'&nbsp;&nbsp;&nbsp;<%:Running%></b>' : '<b style=color:red><%:Not Running%></b>';
 			watchdog.innerHTML = status.watchdog ? '&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<%:Daemons%>:&nbsp;&nbsp;&nbsp;<b style=color:green><%:Running%></b>' : '&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<%:Daemons%>:&nbsp;&nbsp;&nbsp;<b style=color:red><%:Not Running%></b>';
 			dase.innerHTML = status.dase ? "<b style=color:green>"+status.dase+"</b>" : "<b style=color:red>"+"<%:Not Set%>"+"</b>";
-			web.innerHTML = status.web ? '<input type="button" class="btn cbi-button cbi-button-reload" value="<%:Yacd Control Panel%>" onclick="return ycad_dashboard(this)"/>' : '<b style=color:red><%:Not Running%></b>';
-			webo.innerHTML = status.web ? '<input type="button" class="btn cbi-button cbi-button-reload" value="<%:Dashboard Control Panel%>" onclick="return net_dashboard(this)"/>' : '<b style=color:red><%:Not Running%></b>';
-			webm.innerHTML = status.web ? '<input type="button" class="btn cbi-button cbi-button-reload" value="<%:Metacubexd Control Panel%>" onclick="return meta_dashboard(this)"/>' : '<b style=color:red><%:Not Running%></b>';
-			webz.innerHTML = status.web ? '<input type="button" class="btn cbi-button cbi-button-reload" value="<%:zashboard Control Panel%>" onclick="return net_zashboard(this)"/>' : '<b style=color:red><%:Not Running%></b>';
+			web.innerHTML = status.web ? '<input type="button" class="btn cbi-button cbi-button-reload" value="<%:Yacd%>" onclick="return ycad_dashboard(this)"/>' : '<b style=color:red><%:Not Running%></b>';
+			webo.innerHTML = status.web ? '<input type="button" class="btn cbi-button cbi-button-reload" value="<%:Dashboard%>" onclick="return net_dashboard(this)"/>' : '<b style=color:red><%:Not Running%></b>';
+			webm.innerHTML = status.web ? '<input type="button" class="btn cbi-button cbi-button-reload" value="<%:Meta%>" onclick="return meta_dashboard(this)"/>' : '<b style=color:red><%:Not Running%></b>';
+			webz.innerHTML = status.web ? '<input type="button" class="btn cbi-button cbi-button-reload" value="<%:zash%>" onclick="return net_zashboard(this)"/>' : '<b style=color:red><%:Not Running%></b>';
 			close_all_connection.innerHTML = status.clash ? '<input type="button" class="btn cbi-button cbi-button-reload" value="<%:Close All Connections%>" onclick="return b_close_all_connection(this)"/>' : '<b style=color:red><%:Not Running%></b>';
 			reload_firewall.innerHTML = status.clash ? '<input type="button" class="btn cbi-button cbi-button-reload" value="<%:Reload Firewall Rules%>" onclick="return b_reload_firewall(this)"/>' : '<b style=color:red><%:Not Running%></b>';
 			flush_fakeip_cache.innerHTML = status.clash ? '<input type="button" class="btn cbi-button cbi-button-reload" value="<%:Flush Fake-IP Cache%>" onclick="return b_flush_fakeip_cache(this)"/>' : '<b style=color:red><%:Not Running%></b>';
@@ -567,10 +710,10 @@
 					var contentWidth = content.offsetWidth;
 					content.style.left = bannerWidth + 'px';
 					
-					var speed = 1;
+					var speed = 3;
 					var position = bannerWidth;
 					var pauseCounter = 0;
-					var pauseDuration = 100;
+					var pauseDuration = 20;
 					
 					function moveText() {
 						if (!isPaused) {
@@ -1008,7 +1151,7 @@
     {
         XHR.get('<%=luci.dispatcher.build_url("admin", "services", "openclash", "status")%>', null, function(x, status) {
         btn.disabled = true;
-        btn.value    = '<%:zashboard Control Panel%>';
+        btn.value    = '<%:zash%>';
         if (status.daip && window.location.hostname == status.daip) {
             url9='<%="http://'+window.location.hostname+':'+status.cn_port+'/ui/zashboard/#/setup?hostname='+ window.location.hostname + '&port=' + status.cn_port + '&secret=' + status.dase +'"%>';
         }
@@ -1028,7 +1171,7 @@
     {
         XHR.get('<%=luci.dispatcher.build_url("admin", "services", "openclash", "status")%>', null, function(x, status) {
         btn.disabled = true;
-        btn.value    = '<%:Metacubexd Control Panel%>';
+        btn.value    = '<%:Meta%>';
         if (status.daip && window.location.hostname == status.daip) {
             url9='<%="http://'+window.location.hostname+':'+status.cn_port+'/ui/metacubexd/#/setup?hostname='+ window.location.hostname + '&port=' + status.cn_port + '&secret=' + status.dase +'"%>';
         }
@@ -1048,7 +1191,7 @@
     {
         XHR.get('<%=luci.dispatcher.build_url("admin", "services", "openclash", "status")%>', null, function(x, status) {
         btn.disabled = true;
-        btn.value    = '<%:Yacd Control Panel%>';
+        btn.value    = '<%:Yacd%>';
         if (status.daip && window.location.hostname == status.daip) {
             url1='<%="http://'+window.location.hostname+':'+status.cn_port+'/ui/yacd/?hostname='+ window.location.hostname + '&port=' + status.cn_port + '&secret=' + status.dase +'"%>';
         }
@@ -1068,7 +1211,7 @@
     {
         XHR.get('<%=luci.dispatcher.build_url("admin", "services", "openclash", "status")%>', null, function(x, status) {
         btn.disabled = true;
-        btn.value    = '<%:Dashboard Control Panel%>';
+        btn.value    = '<%:Dashboard%>';
         if (status.daip && window.location.hostname == status.daip) {
             url2='<%="http://'+window.location.hostname+':'+status.cn_port+'/ui/dashboard/#/?host='+ window.location.hostname + '&port=' + status.cn_port + '&secret=' + status.dase +'"%>';
         }
@@ -1180,4 +1323,76 @@
         });
 	};
 //]]></script>
+		<script>
+    fetch('http://ip-api.com/json')
+        .then(response => response.json())
+        .then(data => {
+            const countryCode = data.countryCode.toLowerCase();
+            const dataOrg = data.as.replace(/AS\d+\s*/, "").trim();
+            const flagImage = `https://flagcdn.com/128x96/${countryCode}.png`;
 
+            document.getElementById('flag').innerHTML = `
+                <center>
+                    <a target="_blank" href="https://flagcdn.com/160x120/${countryCode}.png">
+                        <img src="${flagImage}" alt="flag ${data.country_name}">
+                    </a>
+                </center>
+                <br/>
+            `;
+
+            document.getElementById('ip-info').innerHTML = `
+                <center>
+                    <a target="_blank" href="http://ip-api.com/json">
+                        <img src="https://img.shields.io/badge/${data.query}-${dataOrg}-orange" alt="ip">
+                    </a>
+                </center>
+            `;
+
+            document.getElementById('ip-country').innerHTML = `
+                <center>
+                    <a target="_blank" href="http://ip-api.com/json">
+                        <img src="https://img.shields.io/badge/${data.country}-${data.regionName}-ligthgreen" alt="ip">
+                    </a>
+                </center>
+            `;
+
+            document.getElementById('current-version').innerHTML = `
+                <center>
+                    <a target="_blank" href="https://github.com/vernesong/OpenClash">
+                        <img src="/luci-static/resources/openclash/img/version.svg" alt="oc">
+                    </a>
+                </center>
+            `;
+
+            toggleImages();
+        })
+        .catch(error => {
+            console.error('Terjadi kesalahan:', error);
+        });
+
+    function toggleImages() {
+        let currentIndex = 0;
+        const images = document.querySelectorAll('#image-container > div');
+
+        images[currentIndex].style.display = 'block';
+
+        setInterval(() => {
+            images[currentIndex].style.display = 'none';
+            currentIndex = (currentIndex + 1) % images.length;
+            images[currentIndex].style.display = 'block';
+        }, 5000);
+    }
+</script>
+<script>
+    function checkFlag() {
+        var flag = document.getElementById('flag');
+        
+        if (!flag.hasChildNodes()) {
+            var defaultImage = document.createElement('img');
+            defaultImage.src = '/luci-static/resources/openclash/img/logo.png';
+            defaultImage.alt = 'Default Image';
+            flag.appendChild(defaultImage);
+        }
+    }
+    window.onload = checkFlag;
+</script>

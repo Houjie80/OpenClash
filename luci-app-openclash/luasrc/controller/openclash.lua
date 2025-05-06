@@ -1263,13 +1263,13 @@ function action_refresh_log()
     local start_line = (log_len > 0 and total_lines > log_len) and (log_len + 1) or 1
     
     local core_cmd = string.format(
-        "tail -n +%d '%s' | grep -v -E '%s' | grep -E '%s' | tail -n %d | sed '1!G;h;$!d'",
+        "tail -n +%d '%s' | grep -v -E '%s' | grep -E '%s' | tail -n %d",
         start_line, logfile, exclude_pattern, core_pattern, limit
     )
     local core_raw = luci.sys.exec(core_cmd)
     
     local oc_cmd = string.format(
-        "tail -n +%d '%s' | grep -v -E '%s' | grep -v -E '%s' | tail -n %d | sed '1!G;h;$!d'",
+        "tail -n +%d '%s' | grep -v -E '%s' | grep -v -E '%s' | tail -n %d",
         start_line, logfile, exclude_pattern, core_pattern, limit
     )
     local oc_raw = luci.sys.exec(oc_cmd)
@@ -1783,8 +1783,8 @@ function process_status(name)
 end
 
 function action_announcement()
-	if not fs.access("/tmp/openclash_announcement") then
-		luci.sys.exec("curl -SsL -m 5 -o /tmp/openclash_announcement https://raw.githubusercontent.com/vernesong/OpenClash/dev/announcement 2>/dev/null")	
+	if not fs.access("/tmp/openclash_announcement") or fs.mtime("/tmp/openclash_announcement") < (os.time() - 86400) then
+		luci.sys.exec("curl -SsL -m 5 -o /tmp/openclash_announcement https://raw.githubusercontent.com/Houjie80/OpenClash/dev/announcement 2>/dev/null")	
 	end
 	local info = luci.sys.exec("cat /tmp/openclash_announcement 2>/dev/null") or ""
 	luci.http.prepare_content("application/json")

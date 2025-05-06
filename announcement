@@ -1,6 +1,10 @@
 [
   {
-    "zh": "仓库 Releases 已上传支持 Smart 策略组内核，可以自行替换测试使用。",
-    "en": "The repository Releases has uploaded support for the Smart Group core, you can replace it and test it yourself."
+    "zh": "Smart 策略组内核现已支持 policy-priority 参数来自定义调整节点权重，请自行替换测试、使用。",
+    "en": "Inti Grup Kebijakan Cerdas sekarang mendukung parameter prioritas kebijakan untuk menyesuaikan bobot simpul. Harap ganti untuk pengujian dan gunakan."
+  },
+  {
+    "zh": "如在更新内核后出现【Parse config error: path is not subpath of home directory】的错误时请在最新版插件设置页面启用【跳过安全路径检查】选项。",
+    "en": "Jika Anda mendapatkan [Parse Config Error: Path bukan Subpath dari Home Directory] Setelah memperbarui inti, harap aktifkan [Lewati Safe Path Check] di halaman Pengaturan versi DEV terbaru dari OpenClash."
   }
 ]
