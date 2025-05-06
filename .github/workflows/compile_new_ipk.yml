@@ -107,6 +107,31 @@ jobs:
           make defconfig
           make package/luci-app-openclash/compile V=99
 
+  push_packages:
+      needs: Compile
+      name: Push Packages to Release
+      permissions:
+        contents: write  # To push a branch
+      runs-on: ubuntu-latest
+      steps:
+      - name: Download temporary artifact
+        uses: actions/download-artifact@v4
+
+      - name: Moving artifact to releases
+        shell: bash
+        run: |
+          mkdir ./release
+          cp "./tmp/SDK/bin/ar71xx/packages/base/luci-app-openclash_${{ needs.Get-Version.outputs.version }}_all.ipk" "./release/luci-app-openclash_${{ needs.Get-Version.outputs.version }}_all.ipk"
+      - name: Upload release asset
+        uses: svenstaro/upload-release-action@v2
+        with:
+          prerelease: false
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ./release/*
+          overwrite: true
+          tag: v${{ needs.Get-Version.outputs.version }}
+          file_glob: true     
+
       - name: Switch OpenClash Repository to Package
         uses: actions/checkout@v4
         with:
