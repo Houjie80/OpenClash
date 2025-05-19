@@ -1,0 +1,126 @@
+name: Release Packages
+
+on:
+  workflow_dispatch:
+   inputs:
+      releases_branch:
+        description: "Select the releases branch"
+        required: false
+        default: "openwrt-24.10"
+        type: choice
+        options:
+          - openwrt-24.10
+          - openwrt-21.02
+          - openwrt-22.03
+          - openwrt-23.05
+          - SNAPSHOT
+  push:
+    tags:
+      - "v*"
+
+env:
+  PACKAGE_NAME: luci-app-openclash
+
+jobs:
+  get-version:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          ref: ${{ github.ref_name }}
+
+      - name: Extract version
+        id: version
+        run: |
+          VERSION=$(grep 'PKG_VERSION:=' ./Makefile | awk -F '=' '{print $2}' | tr -d ' ')
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+          echo "New Version: ${VERSION}"
+
+      - name: Upload release artifacts
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: "v${{ steps.version.outputs.version }}"
+          generate_release_notes: true
+          draft: false
+          name: "v${{ steps.version.outputs.version }} Release"
+          body: |
+            ## 🚀 **Release v${{ steps.version.outputs.version }}** 🚀
+            ![Total_Download](https://img.shields.io/github/downloads/rizkikotet-dev/luci-theme-rtawrt/v${{ steps.version.outputs.version }}/total?style=for-the-badge&labelColor=blue)
+
+
+            Kami dengan bangga mempersembahkan **v${{ steps.version.outputs.version }}** dari **${{ env.PACKAGE_NAME }}**! Rilis ini membawa berbagai peningkatan, perbaikan bug, dan fitur baru yang akan membuat pengalaman Anda lebih baik. Terima kasih atas dukungan dan masukan Anda!
+
+            ---
+  release:
+    name: Release ${{ matrix.arch }}-${{ matrix.branch }}
+    needs: get-version
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    strategy:
+      fail-fast: false
+      matrix:
+        arch:
+          - x86_64
+        branch:
+          - ${{ inputs.releases_branch }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up build environment
+        run: |
+          echo "::group::Setting up build environment for ${{ matrix.arch }}-${{ matrix.branch }}"
+          mkdir -p feeds/${{ env.PACKAGE_NAME }} artifacts
+          rsync -av --exclude='.git/' --exclude='feeds/' --exclude='artifacts/' ./ ./feeds/${{ env.PACKAGE_NAME }}/
+          echo "::endgroup::"
+
+      - name: Build package
+        uses: openwrt/gh-action-sdk@main
+        env:
+          ARCH: ${{ matrix.arch }}-${{ matrix.branch }}
+          ARTIFACTS_DIR: ${{ github.workspace }}/artifacts
+          FEED_DIR: ${{ github.workspace }}/feeds
+          PACKAGES: ${{ env.PACKAGE_NAME }}
+          NO_REFRESH_CHECK: true
+
+      - name: List built packages
+        run: |
+          find ${{ github.workspace }}/artifacts -type f -name "${{ env.PACKAGE_NAME }}*.ipk" -o -name "${{ env.PACKAGE_NAME }}*.apk" | sort
+          echo "::endgroup::"
+
+      - name: Prepare release artifacts
+        run: |
+          # Create release artifacts directory
+          mkdir -p ${{ github.workspace }}/release-artifacts
+
+          # Handle different file extensions based on branch
+          if [[ "${{ matrix.branch }}" == "SNAPSHOT" ]]; then
+            # For SNAPSHOT branch - copy APK files
+            find ${{ github.workspace }}/artifacts/bin/packages -name "${{ env.PACKAGE_NAME }}*.apk" -exec cp {} ${{ github.workspace }}/release-artifacts/ \; || true
+            find ${{ github.workspace }}/artifacts/bin/targets -name "${{ env.PACKAGE_NAME }}*.apk" -exec cp {} ${{ github.workspace }}/release-artifacts/ \; || true
+          else
+            # For other branches - copy IPK files
+            find ${{ github.workspace }}/artifacts/bin/packages -name "${{ env.PACKAGE_NAME }}*.ipk" -exec cp {} ${{ github.workspace }}/release-artifacts/ \; || true
+            find ${{ github.workspace }}/artifacts/bin/targets -name "${{ env.PACKAGE_NAME }}*.ipk" -exec cp {} ${{ github.workspace }}/release-artifacts/ \; || true
+          fi
+
+          # Debug: list contents
+          echo "Contents of release-artifacts directory:"
+          ls -la ${{ github.workspace }}/release-artifacts/
+
+
+      - name: Upload release artifacts
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: "v${{ needs.get-version.outputs.version }}"
+          files: |
+            ${{ github.workspace }}/release-artifacts/*
